@@ -4,26 +4,18 @@ models.py
 """
 from apps import db
 
-class User(db.Model):
-	email = db.Column(db.String(255),primary_key=True)
-	password = db.Column(db.String(255))
-	name = db.Column(db.String(255))
-	join_date = db.Column(db.DateTime(),default = db.func.now())
-
-class Article(db.Model):
+class Event(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.String(255))
+	title_cal = db.Column(db.String(255))
 	content = db.Column(db.Text())
-	author = db.Column(db.String(255))
-	category = db.Column(db.String(255))
+	host = db.Column(db.String(255))
+	category_char = db.Column(db.String(255))
+	category_host = db.Column(db.String(255))
 	date_created = db.Column(db.DateTime(),default = db.func.now())
-
-class Comment(db.Model):
-	id = db.Column(db.Integer, primary_key = True)
-	article_id = db.Column(db.Integer,db.ForeignKey('article.id'))
-	article = db.relationship('Article',backref=db.backref('comments',cascade='all,delete-orphan',lazy='dynamic'))
-	content = db.Column(db.Text())
-	email = db.Column(db.String(255))
-	author = db.Column(db.String(255))
-	password = db.Column(db.String(255))
-	date_created = db.Column(db.DateTime(),default = db.func.now())
+	date_start = db.Column(db.DateTime(),default = db.func.now())
+	date_end = db.Column(db.DateTime(),default = db.func.now())
+	location = db.Column(db.String(255))
+	link = db.Column(db.String(255))
+	poster = db.Column(db.String(255))
+	contact = db.Column(db.String(255))
