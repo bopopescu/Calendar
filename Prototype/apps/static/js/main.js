@@ -32,8 +32,8 @@ $(document).ready(function () {
 	$('.btn-event').click(function(){
 		makeDetail(1);
 	});
-	$('#myModal').on('hidden.bs.modal',function(e){
+	$('body').on('hidden.bs.modal','#myModal', function(e){
 		console.log('-------');
 		$('#myModal').remove();
-	});
+	}); 
 });
