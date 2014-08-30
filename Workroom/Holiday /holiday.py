@@ -34,3 +34,5 @@ print holidays[0].isoformat()
 
 for item in holiday_list:
     print get_weekday(item)
+
+# title of holidays should be inserted
