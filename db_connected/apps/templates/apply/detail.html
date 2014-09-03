@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block contents %}
+	<div class="llApplyDetail">
+		<h1>글 상세보기</h1>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">제목 : {{ apply_detail.title }} / 작성자 : {{ apply_detail.host }}<span class="float-right">{{ apply_detail.date_created.strftime('%Y-%m-%d %H:%H:%S') }}</span></h3>
+			</div>
+			<div class="panel-body">
+				{{ apply_detail.content|safe }}
+			</div>
+		</div>
+
+	<div class="bottomButtons">
+		<a href="{{ url_for('apply_list') }}" class="btn btn-primary">목록보기</a>
+		<a href="{{ url_for('apply_update', id=apply_detail.id) }}" class="btn btn-success">글 수정</a>
+		<a href="{{ url_for('apply_delete', id=apply_detail.id) }}" class="btn btn-danger">글 삭제</a>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Example of Twitter Bootstrap 3 Modals</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/main.js">
+$(document).ready(function(){
+	$(".btn").click(function(){
+		$("#myModal").modal('show');
+	});
+});
+</script>
+<style type="text/css">
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">KAIST Calendar</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li{% if active_tab == 'timeline' %} class="active"{% endif %}><a href="{{ url_for('apply_list') }}">이벤트 신청 리스트</a></li>
+            <li{% if active_tab == 'apply_create' %} class="active"{% endif %}><a href="{{ url_for('apply_create') }}">이벤트 신청하기</a></li>
+        </ul>
+    </div>
+</nav>
+{% block contents %}{% endblock %}    
+</body>
+</html>                                		

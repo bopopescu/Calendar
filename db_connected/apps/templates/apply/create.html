@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block contents %}
+	<div class="llApplyCreate">
+		<form role="form" method="post">
+			{{ form.hidden_tag() }}
+
+			{% if form.errors %}
+				<div class="alert alert-danger fade in">
+					<a class="close" data-dismiss="alert" href="#">&times;</a>
+					{% for field, errors in form.errors.items() %}
+						<ul>
+							{% for error in errors %}
+								{{ error }}
+							{% endfor %}
+						</ul>
+					{% endfor %}
+				</div>
+			{% endif %}
+
+			{% from "_form_field.html" import render_field %}
+			{% for field in form if field.widget.input_type != 'hidden' %}
+				{{ render_field(field, class="form-control") }}
+			{% endfor %}
+			<div class="form-group">
+				<label for="apply_create_date_start">시작일시</label>
+				<input type="datetime-local" name="date_start" class="for-control" id="apply_create_date_start">
+			</div>
+			<div class="form-group">
+				<label for="apply_create_date_end">끝 일시</label>
+				<input type="datetime-local" name="date_end" class="for-control" id="apply_create_date_end">
+			</div>
+			<div class="form-group">
+				<label for="apply_crate_category_char">성질 카테고리</label>
+				<select name="category_char" class="for-control" id="apply_create_category_char">
+				  <option value="volvo">공연</option>
+				  <option value="saab">전시/상영</option>
+				  <option value="mercedes">대회</option>
+				  <option value="audi">강연/세미나/워크샵</option>
+				  <option value="volvo">모집</option>
+				  <option value="saab">공모전</option>
+				  <option value="mercedes">판매</option>
+				  <option value="ect">기타</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="apply_crate_category_char">주최 카테고리</label>
+				<select name="category_host" class="for-control" id="apply_create_category_host">
+				  <option value="club">동아리</option>
+				  <option value="self_group">자치단체</option>
+				  <option value="school">학교</option>
+				  <option value="etc">기타</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-default">신청하기</button>
+		</form>
+	</div>
+{% endblock %}

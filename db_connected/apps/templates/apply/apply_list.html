@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block contents %}
+	<div class="llApplyList">
+		{% if context.apply_list %}
+			{% for apply_list in context.apply_list %}
+				<div class="well" id="apply_{{ apply_list.id }}">
+					<h4><a href="{{ url_for('apply_detail', id=apply_list.id) }}">{{ apply_list.title }}</a>{{ apply_list.host }}{{ apply_list.category_char }} / {{ apply_list.category_host }}</h4>
+					<h6>{{ apply_list.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+				</div>
+			{% endfor %}
+		{% else %}
+			<div class="no-list">
+				대기중인 이벤트 신청이 없습니다.
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
