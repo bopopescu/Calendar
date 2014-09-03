@@ -13,6 +13,7 @@ function onError(data, status){alert("error");}
 $(document).ready(function(){
 
     $("form#searchform").submit(function(){
+        $('.search_result').remove();
         var formData = $("#searchform").serialize();
         $.ajax({
                     type : "POST",
