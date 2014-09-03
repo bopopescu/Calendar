@@ -1,11 +1,8 @@
 
-function getDailyList(date){ // datetime 
+function getDailyList(){ // datetime 
     $.ajax({
         url: "/getDailyList",
         dataType: 'JSON',
-        data: {
-            "date" : date
-        },
         success: function(data){
             string = '<div id="list_1" class="row list">'
                 +'<div class="col-md-8 col-md-offset-2" style= "border: 1px solid gold; background-color: black; padding: 10px">';
@@ -18,7 +15,7 @@ function getDailyList(date){ // datetime
                 }
             }
             string = string + '</div></div>';
-            $(string).insertAfter($(this).parent());
+            // $(string).insertAfter($(this).parent());
             $(string).insertAfter('#here');
             return string
         },
@@ -33,14 +30,14 @@ function getDailyList(date){ // datetime
 }    
 
 $(document).ready(function(){
-    $('#day').click(function(){
+    $('.day').click(function(){
         //date = datetime.date()
         console.log('-------');
         if($("#list_1").css("display") == "block"){
             $("#list_1").remove();
         }
         else{
-            getDailyList(1);
+            getDailyList();
         }
         console.log('last');
     });

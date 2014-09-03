@@ -10,11 +10,15 @@
     <meta charset="utf-8">
 </head>
 <body>
-    
-    <form action="/search" enctype="multipart/form-data" method="POST">
-        <input type="textfield" name="keyword"><br>
-        <input type="submit" value="Search">
+    <form name="searchform" id="searchform" method="post">
+        <input type="textfield" id="searchtext" name="keyword"><br>
+        <!-- <input type="button" id="submit" name="submit" value="Search"> -->
+        <input type="submit" id="submit" name="submit" value="Search">
     </form>
+
+    <div class="search_result">
+    </div>
+
     <br>
     {% for items in found_list %}
     <p> {{ event_list[items]['id'] }}: {{ event_list[items]['title'] }} </p>
