@@ -26,3 +26,19 @@ def get_inform():
 	inform['location'] = '미래홀'
 
 	return jsonify(inform = inform)
+
+@app.route('/get_month')
+def get_month():
+	month = request.args.get('month', 0, type=int)
+	return jsonify(month = month)
+
+@app.route('/get_week')
+def get_week():
+	week = request.args.get('week', 0, type=int)
+	return jsonify(week = week)
+
+@app.route('/categorize')
+def categorize():
+	category = request.args.get('category','None',type=str)
+	# selected_events = Event.query.filter(Event.category_host == category)
+	return jsonify(category = category)
