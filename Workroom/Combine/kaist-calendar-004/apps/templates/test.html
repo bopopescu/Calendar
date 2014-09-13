@@ -1,131 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Example of Twitter Bootstrap 3 Modals</title>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/static/js/main.js">
-$(document).ready(function(){
-	$(".btn").click(function(){
-		$("#myModal").modal('show');
-	});
-});
-</script>
-<style type="text/css">
-    .bs-example{
-    	margin: 20px;
-    }
-</style>
+    <title>Example of Twitter Bootstrap 3 Modals</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/main.js"></script>
 </head>
 
 
 <body>
-<ul class="nav nav-pills">
-  <li class="a"><a href="#">Month</a></li>
-  <li class="b"><a href="#">Week</a></li>
-  <li><a href="#">Day</a></li>
-</ul>
-<button category="concert">카테고리1</button>
-<div class="container">
-    <div class="cal"></div>
-</div>
-<div class="bs-example">
-    <!-- Button HTML (to Trigger Modal) -->
-    <a href="#" class="btn btn-lg btn-primary btn-event">Launch Demo Modal</a>
-    
-    <!-- Modal HTML -->
-    
-    <div id="zone">
+    <ul class="nav nav-pills">
+        <li class="a"><a href="#">Month</a></li>
+        <li class="b"><a href="#">Week</a></li>
+        <li><a href="#">Day</a></li>
+    </ul>
+    <div class="container">
+        <div class="cal"></div>
     </div>
-</div>
+    <div class="bs-example">
+        <!-- Button HTML (to Trigger Modal) -->
+        <a href="#" class="btn btn-lg btn-primary btn-event">Launch Demo Modal</a>
+        <!-- Modal HTML -->
+        <div id="zone">
+        </div>
+    </div>
 
-<button type="button" class="btn btn-link" id='left'> < </button>
-<button type="button" class="btn btn-link" id='right'> > </button>
-<table class="calendar">
-  <tr class="calendar-head">
-    <td colspan="7"><h2 style="text-align:center;"></h2></td>
-  </tr>
-  <tr class="days">
-    <td>Sun</td>
-    <td>Mon</td>
-    <td>Tue</td>
-    <td>Wed</td>
-    <td>Thu</td>
-    <td>Fri</td>
-    <td>Sat</td>
-  </tr>
-  <tr week="1">
-    <td day="0"><div class="day"></div></td>
-    <td day="1"><div class="day"></div></td>
-    <td day="2"><div class="day"></div></td>
-    <td day="3"><div class="day"></div></td>
-    <td day="4"><div class="day"></div></td>
-    <td day="5"><div class="day"></div></td>
-    <td day="6"><div class="day"></div></td>
-  </tr>
-  <tr week="2">
-    <td day="0"><div class="day"></div></td>
-    <td day="1"><div class="day"></div></td>
-    <td day="2"><div class="day"></div></td>
-    <td day="3"><div class="day"></div></td>
-    <td day="4"><div class="day"></div></td>
-    <td day="5"><div class="day"></div></td>
-    <td day="6"><div class="day"></div></td>
-  </tr>
-  <tr week="3">
-    <td day="0"><div class="day"></div></td>
-    <td day="1"><div class="day"></div></td>
-    <td day="2"><div class="day"></div></td>
-    <td day="3"><div class="day"></div></td>
-    <td day="4"><div class="day"></div></td>
-    <td day="5"><div class="day"></div></td>
-    <td day="6"><div class="day"></div></td>
-  </tr>
-  <tr week="4">
-    <td day="0"><div class="day"></div></td>
-    <td day="1"><div class="day"></div></td>
-    <td day="2"><div class="day"></div></td>
-    <td day="3"><div class="day"></div></td>
-    <td day="4"><div class="day"></div></td>
-    <td day="5"><div class="day"></div></td>
-    <td day="6"><div class="day"></div></td>
-  </tr>
-  <tr week="5">
-    <td day="0"><div class="day"></div></td>
-    <td day="1"><div class="day"></div></td>
-    <td day="2"><div class="day"></div></td>
-    <td day="3"><div class="day"></div></td>
-    <td day="4"><div class="day"></div></td>
-    <td day="5"><div class="day"></div></td>
-    <td day="6"><div class="day"></div></td>
-  </tr>
-  <tr week="6">
-    <td day="0"><div class="day"></div></td>
-    <td day="1"><div class="day"></div></td>
-    <td day="2"><div class="day"></div></td>
-    <td day="3"><div class="day"></div></td>
-    <td day="4"><div class="day"></div></td>
-    <td day="5"><div class="day"></div></td>
-    <td day="6"><div class="day"></div></td>
-  </tr>
-</table>
+    <button type="button" class="btn btn-link" id='left'> < </button>
+    <button type="button" class="btn btn-link" id='right'> > </button>
+    <table class="calendar">
+        <tr class="calendar-head">
+            <td colspan="1" align="center"><h1>검색</h1></td>
+            <td colspan="1" align="center"></td>
+            <td colspan="1" align="center"> 
+                <button type="button" class="btn btn-link" id='previous-month'>
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+            </td>
+            <td colspan="1" align="center"><h2 style="text-align:center;"></h2></td>
+            <td colspan="1" align="center">
+                <button type="button" class="btn btn-link" id='previous-month'>
+                    <span id="next-month" class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+            </td>
+            <td colspan="1" align="center"><h1 style="text-align:center;"><a href="#" class="btn btn-md btn-default btn-upload">업로드신청</a>
+                <div id="zone">
+                </div>
+                </h1>
+            </td>
+            <td colspan="1" align="center"><h1 style="text-align:center;">
+                <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    카테고리 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-header">주최</li>
+                    <li><a href="#">카테고리1</a></li>
+                    <li><a href="#">카테고리2</a></li>
+                    <li><a href="#">카테고리3</a></li>
+                    <li class="divider"></li>
+                    <li role="presentation" class="dropdown-header">성질(??)</li>
+                    <li><a href="#">카테고리1</a></li>
+                    <li><a href="#">카테고리2</a></li>
+                    <li><a href="#">카테고리3</a></li>
+                </ul>
+                </div>
+                </h1>
+            </td>
+        </tr>
+        <tr class="days">
+            <td>Sun</td>
+            <td>Mon</td>
+            <td>Tue</td>
+            <td>Wed</td>
+            <td>Thu</td>
+            <td>Fri</td>
+            <td>Sat</td>
+        </tr>
+        <tr week="1">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="2">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="3">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="4">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="5">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="6">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+    </table>
 
-<style>
-  div.day{
-    width : 210px;
-    height: 120px;
-    border: 1px solid black;
-    text-align: right;
-  }
-  table.calendar{
-    margin-left: 25px;
-    display : none;
-  }
-  .days{
-    text-align: center;
-  }
-</style>
+    <style>
+    div.day{
+        width : 210px;
+        height: 120px;
+        border: 1px solid black;
+        text-align: right;
+    }
+    table.calendar{
+        margin-left: 25px;
+        display : none;
+    }
+    .days{
+        text-align: center;
+    }
+    </style>
 </body>
 </html>                                		

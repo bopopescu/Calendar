@@ -31,6 +31,38 @@ function makeDetail(number){
 return true;
 };
 
+function upload_request(number){
+	$.ajax({
+		url:"/get_inform",
+		dataType : 'JSON',
+		data: {
+			"number" : number
+			//원래는 이벤트의 id를 주고, 그에 맞는 정보들을 받아오는 것입니다.
+		},
+		success:function(data){
+			temp = data.inform;
+			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+			'<h4 class="modal-title">업로드신청</h4></div>'+
+			'<div class="modal-body">'+
+			'<p>업로드 신청 폼을 만들 공간</p>'+
+			'<p class="text-warning"><small>뚝딱뚝딱</small></p>'+
+			'</div>'+
+			'<div class="modal-footer">'+
+			'<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>'+
+			'</div></div></div></div>';
+			$("#zone").append(string);
+			$("#myModal").modal('show');
+		},
+		error: function(status){
+			string = "<div class='well' id='article_" + data.id + ".><h1>에러가 발생했습니다..</h1></div>";
+			$("#zone").append(string);
+		}
+	});
+return true;
+};
+
+
+
 function callMonth(month){
 	$.ajax({
 		url:"/get_month",
@@ -109,8 +141,14 @@ function makeMonthtemplate(year,month){
 }
 
 $(document).ready(function () {
+
+	makeMonthtemplate(2014,9);
+
 	$('.btn-event').click(function(){
 		makeDetail(1);
+	});
+	$('.btn-upload').click(function(){
+		upload_request(1);
 	});
 	$('body').on('hidden.bs.modal','#myModal',function(e){
 		console.log('-------');
@@ -130,7 +168,7 @@ $(document).ready(function () {
 		var temp_category = $(this).attr('category');
 		getCategory(temp_category);
 	});
-	$('#left').click(function(){
+	$('#previous-month').click(function(){
 		if (global_month==1) {
 			global_year--;
 			global_month=12;
@@ -139,7 +177,7 @@ $(document).ready(function () {
 		};
 		makeMonthtemplate(global_year,global_month);
 	});
-	$('#right').click(function(){
+	$('#next-month').click(function(){
 		if (global_month==12) {
 			global_year++;
 			global_month=1;
