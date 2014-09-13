@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Example of Twitter Bootstrap 3 Modals</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/main.js">
+$(document).ready(function(){
+  $(".btn").click(function(){
+    $("#myModal").modal('show');
+  });
+});
+</script>
+<style type="text/css">
+    .bs-example{
+      margin: 20px;
+    }
+</style>
+</head>
+
+
+<body>
+<ul class="nav nav-pills">
+  <li class="a"><a href="#">Month</a></li>
+  <li class="b"><a href="#">Week</a></li>
+  <li><a href="#">Day</a></li>
+</ul>
+<button category="concert">카테고리1</button>
+<div class="container">
+    <div class="cal"></div>
+</div>
+
+<!-- Start of Event detail -->
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="#" class="btn btn-lg btn-primary btn-event makedetail">Event detail</a>
+    
+    <!-- Modal HTML -->
+    
+    <div id="zone_detail">
+    </div>
+</div>
+<!-- End of Event deteail -->
+
+
+<!-- Start of Help -->
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="#" class="btn btn-lg btn-primary btn-event makehelp">Help</a>
+    
+    <!-- Modal HTML -->
+    
+    <div id="zone_help">
+    </div>
+</div>
+<!-- End of Help -->
+
+<button type="button" class="btn btn-link" id='left'> < </button>
+<button type="button" class="btn btn-link" id='right'> > </button>
+<table class="calendar">
+  <tr class="calendar-head">
+    <td colspan="7"><h2 style="text-align:center;"></h2></td>
+  </tr>
+  <tr class="days">
+    <td>Sunday</td>
+    <td>Monday</td>
+    <td>Tue</td>
+    <td>Wed</td>
+    <td>Thur</td>
+    <td>Fri</td>
+    <td>Sat</td>
+  </tr>
+  <tr class="cont">
+    <td day="0"><div class="day cont"></div></td>
+    <td day="1"><div class="day cont"></div></td>
+    <td day="2"><div class="day cont"></div></td>
+    <td day="3"><div class="day cont"></div></td>
+    <td day="4"><div class="day cont"></div></td>
+    <td day="5"><div class="day cont"></div></td>
+    <td day="6"><div class="day cont"></div></td>
+  </tr>
+  <tr week="1">
+    <td day="0"><div class="day"></div></td>
+    <td day="1"><div class="day"></div></td>
+    <td day="2"><div class="day"></div></td>
+    <td day="3"><div class="day"></div></td>
+    <td day="4"><div class="day"></div></td>
+    <td day="5"><div class="day"></div></td>
+    <td day="6"><div class="day"></div></td>
+  </tr>
+</table>
+
+<style>
+  div.day.cont{
+    height: 120px;
+  }
+  div.day{
+    width : 210px;
+    height: 600px;
+    border: 1px solid black;
+    text-align: right;
+  }
+  table.calendar{
+    margin-left: 25px;
+    display : none;
+  }
+  .days{
+    text-align: center;
+  }
+</style>
+</body>
+</html>                                   
