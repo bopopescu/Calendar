@@ -1,5 +1,5 @@
-application: kaist-calendar-004
-version: combine
+application: story5462
+version: cal
 runtime: python27
 api_version: 1
 threadsafe: yes

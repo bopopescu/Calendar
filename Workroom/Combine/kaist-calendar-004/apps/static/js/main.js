@@ -119,24 +119,66 @@ function getLastDay(year,month){
 	};
 }
 
-function makeMonthtemplate(year,month){
+function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았으면 좋겠다.
 	$('.day').children().remove();
 	$('.calendar').css('display','block');
-	$('.calendar-head h2').text(year + '.' + month);
+	$('.calendar-head h2 span').text(year + '.' + month);
 	var first_date = new Date(year + "/"+month),
-		first_day = first_date.getDay();
+		first_date_ds = parseInt(first_date.getTime()/86400000) + 719163 ,
+		date_ds = first_date_ds,
+		first_day = first_date.getDay(),
 		last_day = getLastDay(year,month);
 
 	var temp_week = 1;
 	var temp_day = first_day;
+
+	var last_month,
+		last_year,
+		next_month,
+		next_year;
+
+	if (month==1){
+		last_month = 12;
+		last_year = year-1
+	} else{
+		last_month = month-1;
+		last_year = year;
+	};
+
+	if (month==12){
+		next_year = year +1
+		next_month = 1;
+	} else{
+		next_month = month+1;
+		next_year = year;
+	};
+
+	last_last = getLastDay(last_year,last_month);
+	for (var i = 1; i<=temp_day; i++) {
+		$temp = $('tr[week="1"]').children('td[day="'+(temp_day-i)+'"]');
+		$temp.children().append('<span class="date other" date="'+(first_date_ds-i)+'">'+(last_last-i+1)+'</span>');
+	};
+
 	for (var i = 1; i <= last_day; i++) {
 		if (temp_day==7) {
 			temp_day = 0;
 			temp_week++;
 		};
 		$temp = $('tr[week="'+temp_week+'"]').children('td[day="'+temp_day+'"]');
-		$temp.children().append('<span class="date" date="'+i+'">'+i+'</span>');
+		$temp.children().append('<span class="date" date="'+(date_ds)+'">'+i+'</span>');
 		temp_day++;
+		date_ds++;
+	};
+	for(var i = 1; i<= 14; i++){
+		if (temp_day==7) {
+			temp_day = 0;
+			temp_week++;
+		};
+		if (temp_week==7){break;}
+		$temp = $('tr[week="'+temp_week+'"]').children('td[day="'+temp_day+'"]');
+		$temp.children().append('<span class="date other" date="'+(date_ds)+'">'+i+'</span>');
+		temp_day++;
+		date_ds++;
 	};
 }
 
@@ -159,7 +201,7 @@ $(document).ready(function () {
 	});
 	$('.a').click(function(){
 		callMonth(1);
-		makeMonthtemplate(2014,8)
+		makeMonthtemplate(2014,9)
 	});
 	$('.b').click(function(){
 		callWeek(1);
