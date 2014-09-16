@@ -1,16 +1,19 @@
-import os
+"""
+settings.py
 
-# from secret_keys import CSRF_SECRET_KEY, SESSION_KEY
+Configuration for Flask app
+
+"""
 
 
 class Config(object):
-    # Set secret keys for CSRF protection
-    # SECRET_KEY = CSRF_SECRET_KEY
-    # CSRF_SESSION_KEY = SESSION_KEY
+    # Set secret key to use session
+    SECRET_KEY = "likelion-flaskr-secret-key"
     debug = False
 
-
 class Production(Config):
-    DEBUG = True
-    # CSRF_ENABLED = True
-    ADMIN = "lla@lla.com"
+    debug = True
+    CSRF_ENABLED = False
+    ADMIN = "calendarkaist4@gmail.com"
+    SQLALCHEMY_DATABASE_URI = 'mysql+gaerdbms:///calendar?instance=kaist-calendar-004:kaist-calendar-004'
+    migration_directory = 'migrations'
