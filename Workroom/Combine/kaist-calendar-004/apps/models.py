@@ -17,12 +17,11 @@ class Event(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=db.func.now())
     date_start = db.Column(db.DateTime(timezone=True))
     date_end = db.Column(db.DateTime(timezone=True))
-
-    # date_start = db.Column(db.String(255))
-    # date_end = db.Column(db.String(255))
     
     location = db.Column(db.String(255))
     link = db.Column(db.String(255))
     poster = db.Column(db.String(255))
     contact = db.Column(db.String(255))
     contact_open = db.Column(db.Boolean())
+
+    acceptance = db.Column(db.Boolean())
