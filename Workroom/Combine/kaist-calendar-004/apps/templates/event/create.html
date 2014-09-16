@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD TEST</title>
+</head>
+<body>
+
+    <div class="llArticlecreate">
+        <form role="from" method="post">
+            {{ form.hidden_tag() }}
+
+            {% if form.errors %}
+                <div class="alert alert-danger fade in">
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    {% for field, errors in form.errors.items() %}
+                        <ul>
+                            {% for error in errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% from "_form_field.html" import render_field %}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                {{ render_field(field, class="form-control") }}
+            {% endfor %}
+            
+            <button type="submit" class="btn btn-default">글쓰기</button>
+        </form>
+    </div>
+    
+
+
+    <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+</body>
+</html>

@@ -1,13 +1,47 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, url_for, redirect, flash, session, g, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from apps import app
+from apps import app, db
+from models import Event
 from sqlalchemy import desc
+from forms import EventForm
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template("test.html")
+@app.route('/', methods=['GET'])
+def event_list():
+    context = {}
+    context['event_list'] = Event.query.order_by(desc(Event.date_created)).all()
+    return render_template("home.html", context=context)
+
+@app.route('/event/create/', methods=['GET', 'POST'])
+def event_create():
+    form = EventForm()
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            event = Event(
+                title = form.title.data,
+                title_cal = form.title_cal.data,
+                content = form.content.data,
+                host = form.host.data,
+                category_char = form.category_char.data,
+                category_host = form.category_host.data,
+                date_start = form.date_start.data,
+                date_end = form.date_end.data,
+                location = form.location.data,
+                link = form.link.data,
+                poster = form.poster.data,
+                contact = form.contact.data,
+                contact_open = form.contact_open.data,
+                password = form.password.data
+            )
+
+            db.session.add(event)
+            db.session.commit()
+
+            flash(u'이벤트를 등록했습니다.', 'success')
+            return redirect(url_for('event_list'))
+
+    return render_template('event/create.html', form=form)
 
 @app.route('/get_inform')
 def get_inform():
@@ -42,3 +76,17 @@ def categorize():
 	category = request.args.get('category','None',type=str)
 	# selected_events = Event.query.filter(Event.category_host == category)
 	return jsonify(category = category)
+
+
+#
+# @error Handlers
+#
+# Handle 404 errors
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+# Handle 500 errors
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500
