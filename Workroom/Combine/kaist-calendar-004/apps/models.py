@@ -15,8 +15,11 @@ class Event(db.Model):
     category_host = db.Column(db.String(255))
 
     date_created = db.Column(db.DateTime(), default=db.func.now())
-    date_start = db.Column(db.String(255))
-    date_end = db.Column(db.String(255))
+    date_start = db.Column (db.DateTime(), timezone=True)
+    date_end = db.Column(db.DateTime(),, timezone=True)
+
+    # date_start = db.Column(db.String(255))
+    # date_end = db.Column(db.String(255))
     
     location = db.Column(db.String(255))
     link = db.Column(db.String(255))
