@@ -194,7 +194,7 @@ function makeWeektemplate(year,month,date){ //week 만드는 방식 flow가 같았으면 �
 	target_year = target.getFullYear(); // year four digits
     
     // clean calendar
-    $('.day').children().remove();
+    $("tr.days > td > div.days-date").remove();
     $('.calendar').css('display','block');
 
     // display target month and year
@@ -216,15 +216,38 @@ function makeWeektemplate(year,month,date){ //week 만드는 방식 flow가 같았으면 �
     var date_print = new Date(first); 
     for (var i = 0; i < 7; i++) {
 	date_print.setDate(first.getDate() + i); 
-	var tmp_ds = parseInt(date_print.getTime()/86400000) + 719163; 
-	$temp = $('tr[week="2"]').children('td[day="'+date_print.getDay()+'"]');
-	$temp.children().append('<span class="date" date="'+(tmp_ds-i)+'">'+date_print.getDate()+'</span>');
+	// var tmp_ds = parseInt(date_print.getTime()/86400000) + 719163; 
+	// $temp = $('tr[week="2"]').children('td[day="'+date_print.getDay()+'"]');
+	// $temp.children().append('<span class="date" date="'+(tmp_ds-i)+'">'+date_print.getDate()+'</span>');
+	$("tr.days > td[day="+i+"]").append('<div class="days-date">'+date_print.getDate()+'</div>');
     };
+
+    // draw rows of weekly table
+    var diff = 30; // minutes
+    // initialize date_print to 00:00:00 (HH:DD:MM)
+    date_print.setHours(0); 
+    date_print.setMinutes(0);
+    date_print.setSeconds(0); 
+    date_print.setMilliseconds(0); 
+    window.console.log("date_print :"); 
+    window.console.log(date_print); 
+    
+    for (var i = 0; i < 24/0.5; i++){
+	$("table.calendar.table").append('<tr hours='+date_print.getHours()+' mins='+date_print.getMinutes()+' secs='+date_print.getSeconds()+'>'+
+	'<td day="0"><div></div></td>'+
+        '<td day="1"><div></div></td>'+
+        '<td day="2"><div></div></td>'+
+        '<td day="3"><div></div></td>'+
+        '<td day="4"><div></div></td>'+
+        '<td day="5"><div></div></td>'+
+        '<td day="6"><div></div></td>'+'</tr>');
+	date_print.setTime(date_print.getTime() + diff*60000);
+    }
 }
 
 $(document).ready(function () {
 
-    makeMonthtemplate(2014,9);
+    // makeMonthtemplate(2014,9);
     makeWeektemplate(2014,9,18); 
 
     $('.btn-event').click(function(){

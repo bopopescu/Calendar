@@ -1,167 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>KAIST Calendar</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>
-</head>
+  </head>
 
 
-<body>
+  <body>
     <div class="container">
-        <div class="cal"></div>
+      <div class="cal"></div>
     </div>
 
 
     <table class="table" style="table-layout:fixed;">
-        <tr class="calendar-head">
-            <td valign="middle" colspan="1" align="center"><h3>검색</h3></td>
-            <td valign="middle" colspan="1" align="center">
-                <ul class="nav nav-pills">
-                    <li class="a"><a href="#">Month</a></li>
-                    <li class="b"><a href="#">Week</a></li>
-                    <li><a href="#">Day</a></li>
-                </ul>
-            </td>
-            <td valign="middle" colspan="1" align="center"> 
-            </td>
-            <td valign="middle" colspan="1" align="center">
-                <h2 style="text-align:center;">
-                    <button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
-                    <span></span>
-                    <button type="button" class="btn btn-link" id='next-month'> &gt; </button>
-                </h2>
-            </td>
-            <td valign="middle" colspan="1" align="center">
+      <tr class="calendar-head">
+        <td valign="middle" colspan="1" align="center"><h3>검색</h3></td>
+        <td valign="middle" colspan="1" align="center">
+          <ul class="nav nav-pills">
+            <li class="a"><a href="#">Month</a></li>
+            <li class="b"><a href="#">Week</a></li>
+            <li><a href="#">Day</a></li>
+          </ul>
+        </td>
+        <td valign="middle" colspan="1" align="center"> 
+        </td>
+        <td valign="middle" colspan="1" align="center">
+          <h2 style="text-align:center;">
+            <button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
+            <span></span>
+            <button type="button" class="btn btn-link" id='next-month'> &gt; </button>
+          </h2>
+        </td>
+        <td valign="middle" colspan="1" align="center">
 
-            </td>
-            <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;"><a href="#" class="btn btn-md btn-default btn-upload">업로드신청</a>
-                <div id="zone">
-                </div>
-                </h1>
-            </td>
-            <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;">
-                <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    카테고리 <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li role="presentation" class="dropdown-header">주최</li>
-                    <li><a href="#">카테고리1</a></li>
-                    <li><a href="#">카테고리2</a></li>
-                    <li><a href="#">카테고리3</a></li>
-                    <li class="divider"></li>
-                    <li role="presentation" class="dropdown-header">성질(??)</li>
-                    <li><a href="#">카테고리1</a></li>
-                    <li><a href="#">카테고리2</a></li>
-                    <li><a href="#">카테고리3</a></li>
-                </ul>
-                </div>
-                </h1>
-            </td>
-        </tr>
+        </td>
+        <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;"><a href="#" class="btn btn-md btn-default btn-upload">업로드신청</a>
+            <div id="zone">
+            </div>
+          </h1>
+        </td>
+        <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                카테고리 <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li role="presentation" class="dropdown-header">주최</li>
+                <li><a href="#">카테고리1</a></li>
+                <li><a href="#">카테고리2</a></li>
+                <li><a href="#">카테고리3</a></li>
+                <li class="divider"></li>
+                <li role="presentation" class="dropdown-header">성질(??)</li>
+                <li><a href="#">카테고리1</a></li>
+                <li><a href="#">카테고리2</a></li>
+                <li><a href="#">카테고리3</a></li>
+              </ul>
+            </div>
+          </h1>
+        </td>
+      </tr>
     </table>
 
     <table class="calendar table">
 
-        <tr class="days">
-            <td>Sun</td>
-            <td>Mon</td>
-            <td>Tue</td>
-            <td>Wed</td>
-            <td>Thu</td>
-            <td>Fri</td>
-            <td>Sat</td>
-        </tr>
-        <tr week="1">
-            <td day="0"><div class="day"></div></td>
-            <td day="1"><div class="day"></div></td>
-            <td day="2"><div class="day"></div></td>
-            <td day="3"><div class="day"></div></td>
-            <td day="4"><div class="day"></div></td>
-            <td day="5"><div class="day"></div></td>
-            <td day="6"><div class="day"></div></td>
-        </tr>
-        <tr week="2">
-            <td day="0"><div class="day"></div></td>
-            <td day="1"><div class="day"></div></td>
-            <td day="2"><div class="day"></div></td>
-            <td day="3"><div class="day"></div></td>
-            <td day="4"><div class="day"></div></td>
-            <td day="5"><div class="day"></div></td>
-            <td day="6"><div class="day"></div></td>
-        </tr>
-        <tr week="3">
-            <td day="0"><div class="day"></div></td>
-            <td day="1"><div class="day"></div></td>
-            <td day="2"><div class="day"></div></td>
-            <td day="3"><div class="day"></div></td>
-            <td day="4"><div class="day"></div></td>
-            <td day="5"><div class="day"></div></td>
-            <td day="6"><div class="day"></div></td>
-        </tr>
-        <tr week="4">
-            <td day="0"><div class="day"></div></td>
-            <td day="1"><div class="day"></div></td>
-            <td day="2"><div class="day"></div></td>
-            <td day="3"><div class="day"></div></td>
-            <td day="4"><div class="day"></div></td>
-            <td day="5"><div class="day"></div></td>
-            <td day="6"><div class="day"></div></td>
-        </tr>
-        <tr week="5">
-            <td day="0"><div class="day">
-                <div class="bs-example">
-                    <span class="glyphicon glyphicon-music btn-event"></span>
-                    <div id="zone"></div>
-                </div>
-            </div></td>
-            <td day="1"><div class="day"></div></td>
-            <td day="2"><div class="day"></div></td>
-            <td day="3"><div class="day"></div></td>
-            <td day="4"><div class="day"></div></td>
-            <td day="5"><div class="day"></div></td>
-            <td day="6"><div class="day"></div></td>
-        </tr>
-        <tr week="6">
-            <td day="0"><div class="day"></div></td>
-            <td day="1"><div class="day"></div></td>
-            <td day="2"><div class="day"></div></td>
-            <td day="3"><div class="day"></div></td>
-            <td day="4"><div class="day"></div></td>
-            <td day="5"><div class="day"></div></td>
-            <td day="6"><div class="day"></div></td>
-        </tr>
+      <tr class="days">
+        <td day="0">
+	  <div class="days-day">Sun</div>
+	</td>
+        <td day="1">
+	  <div class="days-day">Mon</div>
+	</td>
+        <td day="2">
+	  <div class="days-day">Tue</div>
+	</td>
+        <td day="3">
+	  <div class="days-day">Wed</div>
+	</td>
+        <td day="4">
+	  <div class="days-day">Thu</div>
+	</td>
+        <td day="5">
+	  <div class="days-day">Fri</div>
+	</td>
+        <td day="6">
+	  <div class="days-day">Sat</div>
+	</td>
+      </tr>
+      
+      <!-- <tr week="1"> -->
+      <!--   <td day="0"><div class="day"></div></td> -->
+      <!--   <td day="1"><div class="day"></div></td> -->
+      <!--   <td day="2"><div class="day"></div></td> -->
+      <!--   <td day="3"><div class="day"></div></td> -->
+      <!--   <td day="4"><div class="day"></div></td> -->
+      <!--   <td day="5"><div class="day"></div></td> -->
+      <!--   <td day="6"><div class="day"></div></td> -->
+      <!-- </tr> -->
+      <!-- <tr week="2"> -->
+      <!--   <td day="0"><div class="day"></div></td> -->
+      <!--   <td day="1"><div class="day"></div></td> -->
+      <!--   <td day="2"><div class="day"></div></td> -->
+      <!--   <td day="3"><div class="day"></div></td> -->
+      <!--   <td day="4"><div class="day"></div></td> -->
+      <!--   <td day="5"><div class="day"></div></td> -->
+      <!--   <td day="6"><div class="day"></div></td> -->
+      <!-- </tr> -->
+      <!-- <tr week="3"> -->
+      <!--   <td day="0"><div class="day"></div></td> -->
+      <!--   <td day="1"><div class="day"></div></td> -->
+      <!--   <td day="2"><div class="day"></div></td> -->
+      <!--   <td day="3"><div class="day"></div></td> -->
+      <!--   <td day="4"><div class="day"></div></td> -->
+      <!--   <td day="5"><div class="day"></div></td> -->
+      <!--   <td day="6"><div class="day"></div></td> -->
+      <!-- </tr> -->
+      <!-- <tr week="4"> -->
+      <!--   <td day="0"><div class="day"></div></td> -->
+      <!--   <td day="1"><div class="day"></div></td> -->
+      <!--   <td day="2"><div class="day"></div></td> -->
+      <!--   <td day="3"><div class="day"></div></td> -->
+      <!--   <td day="4"><div class="day"></div></td> -->
+      <!--   <td day="5"><div class="day"></div></td> -->
+      <!--   <td day="6"><div class="day"></div></td> -->
+      <!-- </tr> -->
+      <!-- <tr week="5"> -->
+      <!--   <td day="0"><div class="day"> -->
+      <!--       <div class="bs-example"> -->
+      <!--         <span class="glyphicon glyphicon-music btn-event"></span> -->
+      <!--         <div id="zone"></div> -->
+      <!--       </div> -->
+      <!--   </div></td> -->
+      <!--   <td day="1"><div class="day"></div></td> -->
+      <!--   <td day="2"><div class="day"></div></td> -->
+      <!--   <td day="3"><div class="day"></div></td> -->
+      <!--   <td day="4"><div class="day"></div></td> -->
+      <!--   <td day="5"><div class="day"></div></td> -->
+      <!--   <td day="6"><div class="day"></div></td> -->
+      <!-- </tr> -->
+      <!-- <tr week="6"> -->
+      <!--   <td day="0"><div class="day"></div></td> -->
+      <!--   <td day="1"><div class="day"></div></td> -->
+      <!--   <td day="2"><div class="day"></div></td> -->
+      <!--   <td day="3"><div class="day"></div></td> -->
+      <!--   <td day="4"><div class="day"></div></td> -->
+      <!--   <td day="5"><div class="day"></div></td> -->
+      <!--   <td day="6"><div class="day"></div></td> -->
+      <!-- </tr> -->
     </table>
 
-<style>
-  .calendar-head{
-    width: 1450px;
-  }
-  div.day{
-    width : 210px;
-    height: 120px;
-    text-align: right;
-  }
-  table.calendar{
-    margin-left: 25px;
-    display : none;
-  }
-  .days{
-    text-align: center;
-  }
-  .other{
-    color:gray;
-  }
-  td[day="0"]{
-    color: red;
-  }
-  td[day="6"]{
-    color: blue;
-  }
-</style>
-</body>
-</html>                                     
+    <style>
+      .calendar-head{
+      width: 1450px;
+      }
+
+      tr.days>td{
+      width: 210px;
+      }
+      tr[mins="30"]{
+      background-color: #eceaea;
+      }
+
+      div.day{
+      width : 210px;
+      height: 120px;
+      text-align: right;
+      }
+      table.calendar{
+      margin-left: 25px;
+      display : none;
+      }
+      .days{
+      text-align: center;
+      }
+      .other{
+      color:gray;
+      }
+      td[day="0"]{
+      color: red;
+      }
+      td[day="6"]{
+      color: blue;
+      }
+    </style>
+  </body>
+</html>  
