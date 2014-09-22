@@ -122,7 +122,8 @@ function getLastDay(year,month){
 function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았으면 좋겠다.
 	$('.day').children().remove();
 	$('.calendar').css('display','block');
-	$('.calendar-head h2 span').text(year + '.' + month);
+	var head_month = month>9? month : '0'+month;
+	$('.calendar-head h2 span').text(year + '.' + head_month);
 	var first_date = new Date(year + "/"+month),
 		first_date_ds = parseInt(first_date.getTime()/86400000) + 719163 ,
 		date_ds = first_date_ds,
@@ -242,5 +243,9 @@ $(document).ready(function () {
 			global_month++;
 		};
 		makeMonthtemplate(global_year,global_month);
+	});
+	$('.day').hover(function(e){
+		$target = $(this).parent();
+		$target.toggleClass("grayday");
 	});
 });
