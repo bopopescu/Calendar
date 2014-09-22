@@ -187,4 +187,3 @@ $(document).ready(function () {
         makeMonthtemplate(global_year,global_month);
     });
 });
- No newline at end of file
