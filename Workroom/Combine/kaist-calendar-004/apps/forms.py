@@ -57,13 +57,13 @@ class EventForm(Form):
         description={'placeholder': u'주최자(단체) 카테고리를 선하세요.'}
     )
 
-    date_start = DatetimeField(
+    date_start = DateTimeField(
         u'이벤트 시작시각',
         [validators.data_required(u'이벤트 시작시각을 선택하시기 바랍니다.')],
         description={'placeholder': u'이벤트 시작시각을 선택하세요.'}
     )
 
-    date_end = DatetimeField(
+    date_end = DateTimeField(
         u'이벤트 마감시각',
         [validators.data_required(u'이벤트 마감시각을 선택하시기 바랍니다.')],
         description={'placeholder': u'이벤트 마감시각을 선택하세요.'}
