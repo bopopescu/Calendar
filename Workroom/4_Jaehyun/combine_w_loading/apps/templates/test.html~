@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>KAIST Calendar</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="cal"></div>
+    </div>
+
+    <table class="table" style="table-layout:fixed;">
+        <tr class="calendar-head">
+            <td valign="middle" colspan="1" align="center"><h3>검색</h3></td>
+            <td valign="middle" colspan="1" align="center">
+                <ul class="nav nav-pills">
+                    <li class="a"><a href="#">Month</a></li>
+                    <li class="b"><a href="#">Week</a></li>
+                    <li><a href="#">Day</a></li>
+                </ul>
+            </td>
+            <td valign="middle" colspan="3" align="center">
+                <h2 style="text-align:center;">
+                    <button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
+                    <span></span>
+                    <button type="button" class="btn btn-link" id='next-month'> &gt; </button>
+                </h2>
+            </td>
+            <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;"><a href="#" class="btn btn-md btn-default btn-upload">업로드신청</a>
+                <div id="zone">
+                </div>
+                </h1>
+            </td>
+            <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;">
+                <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    카테고리 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-header">주최</li>
+                    <li><a href="#">카테고리1</a></li>
+                    <li><a href="#">카테고리2</a></li>
+                    <li><a href="#">카테고리3</a></li>
+                    <li class="divider"></li>
+                    <li role="presentation" class="dropdown-header">성질(??)</li>
+                    <li><a href="#">카테고리1</a></li>
+                    <li><a href="#">카테고리2</a></li>
+                    <li><a href="#">카테고리3</a></li>
+                </ul>
+                </div>
+                </h1>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table calendar">
+
+        <tr class="days">
+            <td>Sun</td>
+            <td>Mon</td>
+            <td>Tue</td>
+            <td>Wed</td>
+            <td>Thu</td>
+            <td>Fri</td>
+            <td>Sat</td>
+        </tr>
+        <tr week="1">
+            <td day="0"><div class="day"><div class="row 1"></div></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="2">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="3">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="4">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="5">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+        <tr week="6">
+            <td day="0"><div class="day"></div></td>
+            <td day="1"><div class="day"></div></td>
+            <td day="2"><div class="day"></div></td>
+            <td day="3"><div class="day"></div></td>
+            <td day="4"><div class="day"></div></td>
+            <td day="5"><div class="day"></div></td>
+            <td day="6"><div class="day"></div></td>
+        </tr>
+    </table>
+
+<div class="EventList">
+        {% if context.event_list %}
+            {% for event in context.event_list %}
+                <div class="well" id="event_{{ event.id }}">
+                    <h1><a href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h1>
+                    <h3>{{ event.title_cal }}</h3>
+                    <h6>{{ event.content }}</h6>
+                    <h6>{{ event.host }}</h6>
+                    <h6>{{ event.category_char }}</h6>
+                    <h6>{{ event.category_host }}</h6>
+                    
+                    <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    
+                    <h6>{{ event.location }}</h6>
+                    <h6>{{ event.link }}</h6>
+                    <h6>{{ event.poster }}</h6>
+                    <h6>{{ event.contact }}</h6>
+                    <h6>{{ event.contact_open }}</h6>
+                    <h6>{{ event.acceptace }}</h6>
+                    <h6>{{ event.password }}</h6>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-list">
+                이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
+            </div>
+        {% endif %}
+    </div>
+
+
+
+<style>
+  .calendar-head{
+    width: 1450px;
+  }
+  div.day{
+    height: 120px;
+    text-align: right;
+  }
+  table.calendar{
+    margin-left: 25px;
+    /*display : none;*/
+  }
+  .days{
+    text-align: center;
+    width:1450px;
+  }
+  .days td{
+    width:200px;
+  }
+  .other{
+    color:gray;
+  }
+  td[day="0"]{
+    color: red;
+  }
+  td[day="6"]{
+    color: blue;
+  }
+    .grayday{
+    background-color: #DDDDDD;
+  }
+  .day .row{
+    margin-right: 0;
+  }
+  .calendar{
+    margin-left:50px; 
+  }
+
+
+
+</style>
+</body>
+</html>                                     
