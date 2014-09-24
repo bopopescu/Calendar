@@ -6,11 +6,12 @@ from models import Event
 from sqlalchemy import desc
 from forms import EventForm
 
-@app.route('/', methods=['GET'])
+@app.route('/')
+@app.route('/index')
 def event_list():
     context = {}
     context['event_list'] = Event.query.order_by(desc(Event.date_created)).all()
-    return render_template("home.html", context=context)
+    return render_template("test.html", context=context)
 
 @app.route('/event/create/', methods=['GET', 'POST'])
 def event_create():
@@ -75,50 +76,26 @@ def event_delete(id):
         flash(u'게시글을 삭제하였습니다.', 'success')
         return redirect(url_for('event_list'))
 
-# @app.route('/get_inform')
-# def get_inform():
 
-# 	id = request.args.get('id', 0, type=int)
+@app.route('/get_inform')
+def get_inform():
+	id_ = request.args.get('id_', 0, type=int)
+	event = Event.query.get(id_)
 
-# 	inform = {}
-# 	inform['id'] = 1
-# 	inform['title'] = '동틀무렵 7080 나이트'
-# 	inform['content'] = '안녕하세요, KAIST 동틀무렵입니다. 잘 부탁드립니다'
-# 	inform['host'] = '동틀무렵'
-# 	inform['category_char'] = '공연'
-# 	inform['category_host'] = '동아리'
-# 	inform['date_start'] = '140903 19:00'
-# 	inform['date_end'] = '140903 22:00'
-# 	inform['location'] = '미래홀'
+	return jsonify(event = event)
 
-# 	return jsonify(inform = inform)
+@app.route('/get_month')
+def get_month():
+	month = request.args.get('month', 0, type=int)
+	return jsonify(month = month)
 
-# @app.route('/get_month')
-# def get_month():
-# 	month = request.args.get('month', 0, type=int)
-# 	return jsonify(month = month)
+@app.route('/get_week')
+def get_week():
+	week = request.args.get('week', 0, type=int)
+	return jsonify(week = week)
 
-# @app.route('/get_week')
-# def get_week():
-# 	week = request.args.get('week', 0, type=int)
-# 	return jsonify(week = week)
-
-# @app.route('/categorize')
-# def categorize():
-# 	category = request.args.get('category','None',type=str)
-# 	# selected_events = Event.query.filter(Event.category_host == category)
-# 	return jsonify(category = category)
-
-
-#
-# @error Handlers
-#
-# Handle 404 errors
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
-
-# Handle 500 errors
-@app.errorhandler(500)
-def server_error(e):
-    return render_template('500.html'), 500
+@app.route('/categorize')
+def categorize():
+	category = request.args.get('category','None',type=str)
+	# selected_events = Event.query.filter(Event.category_host == category)
+	return jsonify(category = category)
