@@ -6,12 +6,50 @@ from models import Event
 from sqlalchemy import desc
 from forms import EventForm
 
+import logging
+
+
 @app.route('/')
 @app.route('/index')
-def event_list():
+def index():
     context = {}
-    context['event_list'] = Event.query.order_by(desc(Event.date_created)).all()
+    context['event_list'] = Event.query.order_by(
+        desc(Event.date_created)).all()
     return render_template("test.html", context=context)
+
+    
+@app.route('/event_list')
+def event_list():
+    # get first date
+    first_date = request.args.get('first_date', 'None', type=str)
+    print "first_date: " + first_date
+
+    # get last date
+    last_date = request.args.get('last_date', 'None', type=str)
+    print "last_date: " + last_date
+
+    # load events
+    # http://stackoverflow.com/questions/8895208/sqlalchemy-how-to-filter-date-field
+    event_list = Event.query.order_by(Event.date_start).filter(
+        Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    print "event_list: "
+    print event_list
+    # filter events
+
+    # http://stackoverflow.com/questions/727410/how-do-i-write-to-the-console-in-google-app-engine
+    logging.info(event_list)
+    # return events
+
+    if len(event_list) is 0:
+        context = {}
+        context['event_list'] = "hello"
+    else:
+        context = {}
+        context['event_list'] = [i.serialize for i in event_list]
+
+    # context['event_list'] = Event.query.order_by(
+    #     desc(Event.date_created)).all()
+    return jsonify(context=context)
 
 @app.route('/event/create/', methods=['GET', 'POST'])
 def event_create():
@@ -77,12 +115,10 @@ def event_delete(id):
         return redirect(url_for('event_list'))
 
 
-
 @app.route('/get_inform')
 def get_inform():
-
-	id = request.args.get('id', 0, type=int)
-	event = Event.query.get(id)
+	id_ = request.args.get('id_', 0, type=int)
+	event = Event.query.get(id_)
 
 	return jsonify(event = event)
 

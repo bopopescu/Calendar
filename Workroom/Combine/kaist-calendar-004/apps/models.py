@@ -5,6 +5,13 @@ models.py
 from apps import db
 
 
+def dump_datetime(value):
+    """Deserialize datetime object into string form for JSON processing."""
+    if value is None:
+        return None
+    return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
+
+    
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
@@ -25,3 +32,14 @@ class Event(db.Model):
     contact_open = db.Column(db.Boolean())
 
     acceptance = db.Column(db.Boolean())
+
+    # http://stackoverflow.com/questions/7102754/jsonify-a-sqlalchemy-result-set-in-flask
+    @property
+    def serialize(self):
+     """Return object data in easily serializeable format"""
+     return {
+     'title': self.title,
+     'title_cal': self.title_cal,
+     'date_start': dump_datetime(self.date_start),
+     'date_end': dump_datetime(self.date_end)
+     }
