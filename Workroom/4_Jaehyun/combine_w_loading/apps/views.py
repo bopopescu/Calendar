@@ -8,11 +8,13 @@ from forms import EventForm
 
 import logging
 
+
 @app.route('/')
 @app.route('/index')
 def index():
     context = {}
-    context['event_list'] = Event.query.order_by(desc(Event.date_created)).all()
+    context['event_list'] = Event.query.order_by(
+        desc(Event.date_created)).all()
     return render_template("test.html", context=context)
 
 
@@ -20,16 +22,17 @@ def index():
 def event_list():
     # get first date
     first_date = request.args.get('first_date', 'None', type=str)
-    print "first_date: " + first_date;
+    print "first_date: " + first_date
 
     # get last date
     last_date = request.args.get('last_date', 'None', type=str)
-    print "last_date: " + last_date;
+    print "last_date: " + last_date
 
     # load events
     # http://stackoverflow.com/questions/8895208/sqlalchemy-how-to-filter-date-field
-    event_list = Event.query.order_by(desc(Event.date_start)).filter(Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
-    print "event_list: "; 
+    event_list = Event.query.order_by(Event.date_start).filter(
+        Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    print "event_list: "
     print event_list
     # filter events
 
@@ -43,7 +46,7 @@ def event_list():
     else:
         context = {}
         context['event_list'] = [i.serialize for i in event_list]
-    
+
     # context['event_list'] = Event.query.order_by(
     #     desc(Event.date_created)).all()
     return jsonify(context=context)

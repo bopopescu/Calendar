@@ -322,51 +322,61 @@ function eventListAtMonthView(first_date_str, last_date_str){
 			// do what you want
 			// window.console.log(data.context.event_list); 
 			var first_date = new Date(first_date_str),
-				target_date_start = new Date(first_date_str),
-				target_date_end = new Date(first_date_str),
-				str_tmp = "";
-			window.console.log("first_date_str: ");
-			window.console.log(first_date_str);
-			var days = 0; 
+				target_date_t1_str = "",
+				target_date_t2_str = "";
+			// window.console.log("first_date_str: ");
+			// window.console.log(first_date_str);
+			var days = 0, weeks = 0, diffdays = 0; 
 
 			for (var i = 0; i < data.context.event_list.length; i++) {
-				// window.console.log(data.context.event_list[i]);
-				str_tmp = data.context.event_list[i].date_start[0].split("-");
+				window.console.log(data.context.event_list[i]);
+
+				target_date_t1_str = data.context.event_list[i].date_start[0].split("-");
+				target_date_t2_str = data.context.event_list[i].date_start[1].split(":");
 				// window.console.log("start_str: ");
-				// window.console.log(str_tmp);
-				target_date_start.setFullYear(parseInt(str_tmp[0]));
-				target_date_start.setMonth(parseInt(str_tmp[1]-1));
-				target_date_start.setDate(parseInt(str_tmp[2]));
+				// window.console.log(target_date_t1_str);
+				var target_date_start = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
 
+				// window.console.log("target_date_start: ");
+				// window.console.log(target_date_start);
 
-				str_tmp = data.context.event_list[i].date_end[0].split("-");
+				target_date_t1_str = data.context.event_list[i].date_end[0].split("-");
+				target_date_t2_str = data.context.event_list[i].date_end[1].split(":");
 				// window.console.log("end_str: ");
-				// window.console.log(str_tmp);
-				target_date_end.setFullYear(parseInt(str_tmp[0]));
-				target_date_end.setMonth(parseInt(str_tmp[1]-1));
-				target_date_end.setDate(parseInt(str_tmp[2]));
-
-				window.console.log("target_date_start: ");
-				window.console.log(target_date_start);
+				// window.console.log(target_date_t1_str);
+				var target_date_end = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
 
 				// window.console.log("target_date_end: ");
 				// window.console.log(target_date_end);
 
-				// calculate n-th week w.r.t first_date
-				days = diffInDays(first_date, target_date_start);
-				window.console.log("days: ");
-				window.console.log(days);
-				// calculate n-th day w.r.t the week
-				// 
-				// $temp = $('tr[week="1"]').children('td[day="'+(temp_day-i)+'"]');
-				// $temp.children().append('<span class="date other" date="'+(first_date_ds-i)+'">'+(last_last-i+1)+
-				// 	'</span>' 
-				// // + '<div class="row row0">asdf</div>'+
-				// // '<div class="row row1">asdf</div>'+
-				// // '<div class="row row2">asdf</div>'+
-				// // '<div class="row row3">asdf</div>'+
-				// // '<div class="row row4">asdf</div>'
-				// );
+				// draw events
+				var target_date = new Date(target_date_start);
+				for (var j = 0; j <= diffInDays(target_date_start, target_date_end); j++){
+					// calculate n-th week w.r.t first_date
+					diffdays = diffInDays(first_date, target_date);
+					// window.console.log("days: ");
+					// window.console.log(diffdays);
+
+					// calculate n-th day w.r.t the week
+					weeks = parseInt(diffdays / 7) + 1;
+					days = parseInt(diffdays % 7);
+					
+					// window.console.log("weeks: ");
+					// window.console.log(weeks);
+					// window.console.log("days: ");
+					// window.console.log(days); 
+
+					$tmp = $('tr[week="'+weeks+'"] > td[day="'+days+'"] > div.day'); 
+					var ind = $tmp.length - 1; 
+					// window.console.log("num children:"); 
+					// window.console.log(ind); 
+					if (ind < 6){
+						$tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 	
+					}				
+
+					// increase one day
+					target_date.setTime(target_date.getTime() + 24 * 60 * 60 * 1000);
+				}
 			}
 		}
 	});
