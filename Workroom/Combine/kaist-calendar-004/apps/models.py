@@ -40,6 +40,17 @@ class Event(db.Model):
      return {
      'title': self.title,
      'title_cal': self.title_cal,
+     'content': self.content,
+     'host': self.host,
+     'category_char': self.category_char,
+     'category_host': self.category_host,
+     'date_created': dump_datetime(self.date_created),
      'date_start': dump_datetime(self.date_start),
-     'date_end': dump_datetime(self.date_end)
+     'date_end': dump_datetime(self.date_end),
+     'location': self.location,
+     'link': self.link,
+     'poster': self.poster,
+     'contact': self.contact,
+     'contact_open': self.contact_open,
+     'acceptance': self.acceptance
      }

@@ -17,7 +17,7 @@ def index():
         desc(Event.date_created)).all()
     return render_template("test.html", context=context)
 
-    
+
 @app.route('/event_list')
 def event_list():
     # get first date
@@ -117,10 +117,12 @@ def event_delete(id):
 
 @app.route('/get_inform')
 def get_inform():
-	id_ = request.args.get('id_', 0, type=int)
-	event = Event.query.get(id_)
+    id_ = request.args.get('id_', 0, type=int)
+    event_id = Event.query.get(id_)
+    context={}
+    context['event'] = event_id.serialize
 
-	return jsonify(event = event)
+    return jsonify(context = context)
 
 @app.route('/get_month')
 def get_month():
