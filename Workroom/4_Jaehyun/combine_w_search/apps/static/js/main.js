@@ -234,6 +234,7 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 	window.console.log("last_date_str: ");
 	window.console.log(last_date_str);
 
+	// 4 differernt example
 	// all
 	// eventListAtMonthViewAll(first_date_str, last_date_str);
 
@@ -241,13 +242,13 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 	// eventListAtMonthViewQuery(first_date_str, last_date_str, "빌게이츠");
 
 	// category
-	eventListAtMonthViewCategory(first_date_str, last_date_str, "sell");
+	// eventListAtMonthViewCategory(first_date_str, last_date_str, "sell");
 
 	// custom
-	// eventListAtMonthView(first_date_str, last_date_str, "2014", "sell");
+	eventListAtMonthView(first_date_str, last_date_str, "2014", "sell");
 };
 
-function getFirstDateOfThisWeek(year,month,date){ //week ¸¸µå´Â ¹æ½Ä flow°¡ °°¾ÒÀ¸¸é ÁÁ°Ú´Ù.
+function getFirstDateOfThisWeek(year,month,date){ 
     // get current date
     target = new Date(year,month-1,date); // This date variable has to be initialized by function arguments. Today is the default setting. 
     // window.console.log("today :");
@@ -268,7 +269,7 @@ function getFirstDateOfThisWeek(year,month,date){ //week ¸¸µå´Â ¹æ½Ä f
     return first;
 }
 
-function getLastDateOfThisWeek(year,month,date){ //week ¸¸µå´Â ¹æ½Ä flow°¡ °°¾ÒÀ¸¸é ÁÁ°Ú´Ù.
+function getLastDateOfThisWeek(year,month,date){ 
     // get current date
     target = new Date(year,month-1,date); // This date variable has to be initialized by function arguments. Today is the default setting. 
     // window.console.log("today :");
@@ -359,9 +360,12 @@ function drawEventListAtMonthView(first_date_str, last_date_str, data) {
 }
 
 function eventListAtMonthView(first_date_str, last_date_str, query, category){
+	window.console.log("query: ");
+	window.console.log(query);
 	$.ajax({
 		url:"/event_list",
 		dataType:'JSON',
+		type: "GET",
 		data:{
 			"first_date":first_date_str,
 			"last_date":last_date_str,

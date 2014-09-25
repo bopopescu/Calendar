@@ -18,7 +18,7 @@ def index():
     return render_template("test.html", context=context)
 
 
-@app.route('/event_list')
+@app.route('/event_list', methods=['GET'])
 def event_list():
     # get query
     query = request.args.get('query', 'None', type=str)
@@ -37,21 +37,21 @@ def event_list():
     print "last_date: " + last_date
 
     # load events and filter events
-    if category: # category has value
-        if query: # query has value
-            event_list = Event.query.filter_by(category_char=category).filter_by(title=query).order_by(Event.date_start).filter(
+    if category:  # category has value
+        if query:  # query has value
+            event_list = Event.query.filter_by(category_char=category).filter(Event.title.like("%" + query + "%")).order_by(Event.date_start).filter(
                 Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
             print "1"
-        else: # query has no value
+        else:  # query has no value
             event_list = Event.query.filter_by(category_char=category).order_by(Event.date_start).filter(
                 Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
             print "2"
-    else: # category has no value
-        if query: # query has value
-            event_list = Event.query.filter_by(title=query).order_by(Event.date_start).filter(
+    else:  # category has no value
+        if query:  # query has value
+            event_list = Event.query.filter(Event.title.like("%" + query + "%")).order_by(Event.date_start).filter(
                 Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
             print "3"
-        else: # query has no value
+        else:  # query has no value
             # http://stackoverflow.com/questions/8895208/sqlalchemy-how-to-filter-date-field
             event_list = Event.query.order_by(Event.date_start).filter(
                 Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
