@@ -219,7 +219,9 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 		date_ds++;
 	};
 
-	var first_date = getFirstDateOfThisWeek(year,month,first_day);
+
+
+	var first_date = getFirstDateOfThisWeek(year,month,1);
 	var last_date = getLastDateOfThisWeek(year,month,last_day); 
 	window.console.log("fist_date: "); 
 	window.console.log(first_date);
