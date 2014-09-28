@@ -76,35 +76,79 @@ def event_list():
     return jsonify(context=context)
 
 
-@app.route('/event/create/', methods=['GET', 'POST'])
-def event_create():
+@app.route('/create', methods=['POST'])
+def create():
+    logging.info("create start")
     form = EventForm()
 
     if request.method == 'POST':
-        if form.validate_on_submit():
+        logging.info("Method: POST")
+        if True or form.validate_on_submit():
             event = Event(
-                title=form.title.data,
-                title_cal=form.title_cal.data,
-                content=form.content.data,
-                host=form.host.data,
-                category_char=form.category_char.data,
-                category_host=form.category_host.data,
-                date_start=form.date_start.data,
-                date_end=form.date_end.data,
-                location=form.location.data,
-                link=form.link.data,
-                poster=form.poster.data,
-                contact=form.contact.data,
-                contact_open=form.contact_open.data,
+                title = form.title.data,
+                title_cal = form.title_cal.data,
+                content = form.content.data,
+                host = form.host.data,
+                category_char = form.category_char.data,
+                category_host = form.category_host.data,
+                date_start = form.date_start.data,
+                date_end = form.date_end.data,
+                location = form.location.data,
+                link = form.link.data,
+                poster = form.poster.data,
+                contact = form.contact.data,
+                contact_open = form.contact_open.data,
             )
+            print event
+            logging.info("");    
 
             db.session.add(event)
             db.session.commit()
+            
+            print "11111111"
+            logging.info("");  
 
             flash(u'이벤트를 등록했습니다.', 'success')
-            return redirect(url_for('event_list'))
 
-    return render_template('event/create.html', form=form)
+    return redirect(url_for('index'))
+
+
+# @app.route('/event/create/', methods=['GET', 'POST'])
+# def event_create():
+#     form = EventForm()
+
+#     if request.method == 'POST':
+#         if form.validate_on_submit():
+#             event = Event(
+#                 title = form.title.data,
+#                 title_cal = form.title_cal.data,
+#                 content = form.content.data,
+#                 host = form.host.data,
+#                 category_char = form.category_char.data,
+#                 category_host = form.category_host.data,
+#                 date_start = form.date_start.data,
+#                 date_end = form.date_end.data,
+#                 location = form.location.data,
+#                 link = form.link.data,
+#                 poster = form.poster.data,
+#                 contact = form.contact.data,
+#                 contact_open = form.contact_open.data,
+#             )
+
+#             print event
+#             logging.info("");
+
+#             db.session.add(event)
+#             db.session.commit()
+
+#             flash(u'이벤트를 등록했습니다.', 'success')
+#             return redirect(url_for('event_list'))
+#         else:
+#             print "asdfasdfasdf"
+#             logging.info("");
+
+#     return render_template('event/create.html', form=form)
+
 
 
 @app.route('/event/detail/<int:id>', methods=['GET'])

@@ -1,10 +1,14 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>KAIST Calendar</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>
 </head>
 
@@ -15,14 +19,14 @@
     </div>
 
     <nav class="navbar navbar-fixed-top calendar-head" role="navigation" style="height:87px">
-        <div class="form-group">
-            <form action="event_list" method="get" class="navbar-form navbar-left" role="search" style="z-index: 10;">
-                <input type="text" class="form-control" name="search_get">
-                <button type="Submit" class="btn btn-default btn-search">검색</button>
-            </form>
-        </div>
+        <form class="navbar-form navbar-left" role="search"></div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
 
-        <div class="brand"style="z-index: -1"><h2><button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
+        <div class="brand"><h2><button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
             <span></span>
             <button type="button" class="btn btn-link" id='next-month'> &gt; </button></h2></div>
 
@@ -53,7 +57,6 @@
                 </ul>
             </div>
         </nav>
-
 
 <!--         <table class="table" style="table-layout:fixed;">
             <tr class="calendar-head">
@@ -181,34 +184,34 @@
 
 
 <div class="EventList">
-        {% if context.event_list %}
-            {% for event in context.event_list %}
-                <div class="well" id="event_{{ event.id }}">
-                    <h1><a href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h1>
-                    <h3>{{ event.title_cal }}</h3>
-                    <h6>{{ event.content }}</h6>
-                    <h6>{{ event.host }}</h6>
-                    <h6>{{ event.category_char }}</h6>
-                    <h6>{{ event.category_host }}</h6>
-                    
-                    <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
-                    <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
-                    
-                    <h6>{{ event.location }}</h6>
-                    <h6>{{ event.link }}</h6>
-                    <h6>{{ event.poster }}</h6>
-                    <h6>{{ event.contact }}</h6>
-                    <h6>{{ event.contact_open }}</h6>
-                    <h6>{{ event.acceptace }}</h6>
-                    <h6>{{ event.password }}</h6>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="no-list">
-                이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
-            </div>
-        {% endif %}
+    {% if context.event_list %}
+    {% for event in context.event_list %}
+    <div class="well" id="event_{{ event.id }}">
+        <h1><a href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h1>
+        <h3>{{ event.title_cal }}</h3>
+        <h6>{{ event.content }}</h6>
+        <h6>{{ event.host }}</h6>
+        <h6>{{ event.category_char }}</h6>
+        <h6>{{ event.category_host }}</h6>
+
+        <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+        <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+
+        <h6>{{ event.location }}</h6>
+        <h6>{{ event.link }}</h6>
+        <h6>{{ event.poster }}</h6>
+        <h6>{{ event.contact }}</h6>
+        <h6>{{ event.contact_open }}</h6>
+        <h6>{{ event.acceptace }}</h6>
+        <h6>{{ event.password }}</h6>
     </div>
+    {% endfor %}
+    {% else %}
+    <div class="no-list">
+        이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
+    </div>
+    {% endif %}
+</div>
 
 <style>
 .calendar-head{
@@ -284,6 +287,11 @@ nav .btn-upload{
 nav .btn-group{
     margin-top: 25px;
 }
+
+.modal.modal-wide .modal-dialog {
+  width: 50%;
+}
+
 </style>
 </body>
 </html>                                     

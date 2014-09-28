@@ -42,8 +42,51 @@ function makeDetail(id_){
 		},
 		success:function(data){
 			temp = data.context.event;
+			category = ['공연', '전시/상영', '대회', '강연/세미나/워크샵', '모집', '공모전', '판매', '기타', '동아리', '자치단체', '학교'];
+
+			var i = 0;
+			var j = 0;
+
+			if (temp['category_char'] == 'concert'){
+				i = 0;
+			}
+			else if (temp['category_char'] == 'exib'){
+				i = 1;
+			}
+			else if (temp['category_char'] == 'comp'){
+				i = 2;
+			}
+			else if (temp['category_char'] == 'seminar'){
+				i = 3;
+			}
+			else if (temp['category_char'] == 'recr'){
+				i = 4;
+			}
+			else if (temp['category_char'] == 'contest'){
+				i = 5;
+			}
+			else if (temp['category_char'] == 'sell'){
+				i = 6;
+			}
+			else{
+				i = 7;
+			}
+
+			if (temp['category_host'] == 'club'){
+				j = 8;
+			}
+			else if (temp['category_host'] == 'student'){
+				j = 9;
+			}
+			else if (temp['category_host'] == 'uni'){
+				j = 10;
+			}
+			else{
+				j = 7;
+			}
+
 			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-			'<h4 class="modal-title">' + temp['title'] + '<small>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + temp['category_char'] + '/' + temp['category_host']+'</small></h4></div>'+
+			'<h4 class="modal-title">' + temp['title'] + '<small>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + category[i]+ '/' + category[j] +'</small></h4></div>'+
 			'<div class="modal-body">'+
 			'<p>주최 : '+temp['host']+'</p><p>행사시간 : '+temp['date_start'] + ' ~ '+temp['date_end'] + '</p><p>행사장소 : '+temp['location']+'</p><p>행사소개 : '+temp['content']+'</p>'+
 			'<p class="text-warning"><small>행사 관련 정보에 오류가 있을 경우 관리자에게 연락바랍니다.</small></p>'+
@@ -62,30 +105,149 @@ function makeDetail(id_){
 return true;
 };
 
-function upload_request(number){
+function upload_request(id_){
 	$.ajax({
 		url:"/get_inform",
 		dataType : 'JSON',
 		data: {
-			"number" : number
+			"id_" : id_
 			//원래는 이벤트의 id를 주고, 그에 맞는 정보들을 받아오는 것입니다.
 		},
 		success:function(data){
-			temp = data.inform;
-			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-			'<h4 class="modal-title">업로드신청</h4></div>'+
-			'<div class="modal-body">'+
-			'<p>업로드 신청 폼을 만들 공간</p>'+
-			'<p class="text-warning"><small>뚝딱뚝딱</small></p>'+
-			'</div>'+
-			'<div class="modal-footer">'+
-			'<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>'+
-			'</div></div></div></div>';
+			temp = data.context.event;
+			string = 
+            '<div id="myModal" class="modal modal-wide fade">'+
+                '<div class="modal-dialog">'+
+                    '<div class="modal-content">'+
+                        '<div class="modal-header">'+
+                            '<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+                            '<h4 class="modal-title">이벤트 업로드 신청</h4>'+
+                        '</div>'+
+                        '<div class="modal-body">'+
+                            '<form class="form-horizontal" role="form" action="/create" method="POST">'+
+                                '<div class="form-group">'+ // title
+                                    '<label for="input_Title" class="col-lg-2 control-label">제목</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="text" class="form-control" id="title" name="title" placeholder="제목을 적어주세요.">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // title_cal
+                                    '<label for="input_Title_cal" class="col-lg-2 control-label">짧은 제목</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="text" class="form-control" id="title_cal" name="title_cal" placeholder="달력에 표시될 제목입니다. 15자 내로 적어주세요.">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // content
+                                    '<label for="input_Content" class="col-lg-2 control-label">소개</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<textarea class="form-control" id="content" name="content" rows="10" placeholder="이벤트 소개 부탁드립니다."></textarea>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // host
+                                    '<label for="input_Host" class="col-lg-2 control-label">주최</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="text" class="form-control" id="host" name="host" placeholder="주최자 또는 주최단체">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // category_host
+                                    '<label for="input_Category_host" class="col-lg-2 control-label">주최 카테고리</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<select class = "form-control" id="category_host" name="category_host" placeholder="선택하세요.">'+
+                                            '<option>동아리</option>'+
+                                            '<option>자치단체</option>'+
+                                            '<option>학교</option>'+
+                                            '<option>기타</option>'+
+                                        '</select>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // category_char
+                                    '<label for="input_Category_char" class="col-lg-2 control-label">이벤트 카테고리</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<select class = "form-control" id="category_char" name="category_char" placeholder="선택하세요.">'+
+                                            '<option>공연</option>'+
+                                            '<option>전시/상영</option>'+
+                                            '<option>대회</option>'+
+                                            '<option>강연/세미나/워크샵</option>'+
+                                            '<option>모집</option>'+
+                                            '<option>공모전</option>'+
+                                            '<option>판매</option>'+
+                                            '<option>기타</option>'+
+                                        '</select>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // date_start
+                                    '<label for="input_Date_start" class="col-lg-2 control-label">시작 일시</label>'+
+                                    '<div class="col-lg-10">'+
+	                                    '<div class="input-group date" id="datetimepicker1">'+
+	                                        '<input type="text" class="form-control" data-date-format="YYYY-MM-DD hh:mm:00" id="date_start" name="date_start" placeholder="오른쪽 달력 아이콘을 클릭하세요."/>'+
+	                                        '<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>'+
+	                                        '</span>'+
+	                                    '</div>'+
+	                                '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // date_end
+                                    '<label for="input_Date_end" class="col-lg-2 control-label">종료 일시</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<div class="input-group date" id="datetimepicker2">'+
+                                            '<input type="text" class="form-control" data-date-format="YYYY-MM-DD hh:mm:00" id="date_end" name="date_end" placeholder="오른쪽 달력 아이콘을 클릭하세요."/>'+
+                                            '<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>'+
+                                            '</span>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // location
+                                    '<label for="input_Location" class="col-lg-2 control-label">장소</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="text" class="form-control" id="location" name="location" placeholder="이벤트 장소는 어디인가요?">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // link
+                                    '<label for="input_Link" class="col-lg-2 control-label">링크</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="url" class="form-control" id="link" name="link" placeholder="관련 정보 url">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // poster
+                                    '<label for="input_Poster" class="col-lg-2 control-label">포스터 링크</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="url" class="form-control" id="poster" name="poster" placeholder="이미지 파일 url">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // contact
+                                    '<label for="input_Contact" class="col-lg-2 control-label">Email</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<input type="email" class="form-control" id="contact" name="contact" placeholder="연락가능한 Email">'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+ // contact_open
+                                    '<label for="input_Title_cal" class="col-lg-2 control-label">Email 공개여부</label>'+
+                                    '<div class="col-lg-10">'+
+                                        '<div class=checkbox>'+
+                                            '<label>'+
+                                                '<input type="checkbox" id="contact_open" name="contact_open" value="y">비공개'+
+                                            '</label>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                                '<div class="form-group">'+
+                                    '<div class="col-lg-offset-2 col-lg-10">'+
+                                        '<button type="submit" class="btn btn-default" id="submit" name="submit">등록</button>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</form>'
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>';
+
 			$("#zone").append(string);
 			$("#myModal").modal('show');
+			$('#datetimepicker1').datetimepicker();
+            $('#datetimepicker2').datetimepicker();
+
 		},
 		error: function(status){
-			string = "<div class='well' id='article_" + data.id + ".><h1>에러가 발생했습니다..</h1></div>";
+			string = "<div class='well' id='article_" + id_ + ".><h1>에러가 발생했습니다..</h1></div>";
 			$("#zone").append(string);
 		}
 	});
@@ -396,12 +558,12 @@ $(document).ready(function(){
 
 	makeMonthtemplate(2014,9);
 
-	$('.btn-upload').click(function(){
-		makeDetail(1);
-	});
 	// $('.btn-upload').click(function(){
-	// 	upload_request(1);
+	// 	makeDetail(1);
 	// });
+	$('.btn-upload').click(function(){
+		upload_request(1);
+	});
 	$('body').on('hidden.bs.modal','#myModal',function(e){
 		console.log('-------');
 		$('#myModal').remove();
