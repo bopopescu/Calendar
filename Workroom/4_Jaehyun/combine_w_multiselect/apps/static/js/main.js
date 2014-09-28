@@ -151,6 +151,7 @@ function getLastDay(year,month){
 };
 
 var event_list_global = []; 
+var search_query = "서울"; 
 
 function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았으면 좋겠다.
 	$('.day').children().remove();
@@ -242,7 +243,8 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 	
 	// multiselect
 	$('.calendar-multiselect').change(function() {
-		drawEventListAtMonthView(first_date, last_date_str, event_list_global); 
+
+		drawEventListAtMonthView(first_date, last_date_str, event_list_global, search_query); 
 	});
 
 	// $('.selectpicker').selectpicker();
@@ -344,8 +346,7 @@ function diffInDays(src_date, dst_date){
 	return diffDays;
 }
 
-
-function drawEventListAtMonthView(first_date_str, last_date_str, event_list) {
+function drawEventListAtMonthView(first_date_str, last_date_str, event_list, search_query) {
 	$("tr > td > div.day > span > div.row").remove(); 
 	window.console.log("asdfasdfasdfasdffasfd");
 	window.console.log(event_list); 
@@ -365,62 +366,66 @@ function drawEventListAtMonthView(first_date_str, last_date_str, event_list) {
 
 		if( $('.calendar-multiselect > div > ul > li[data-original-index="'+
 			cateogryNameEngToOrignialIndex["공연"]+'"].selected').length != 0 ) {
-			// window.console.log(i); 
 
-			target_date_t1_str = event_list[i].date_start[0].split("-");
-			target_date_t2_str = event_list[i].date_start[1].split(":");
-			// window.console.log("start_str: ");
-			// window.console.log(target_date_t1_str);
-			var target_date_start = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
+			if (search_query === "" || event_list[i].title.indexOf(search_query) > -1) {
+				// window.console.log(i); 
 
-			if (first_date.getTime() > target_date_start.getTime()){
-				target_date_start = first_date; 
-			}
-			// window.console.log("target_date_start: ");
-			// window.console.log(target_date_start);
+				target_date_t1_str = event_list[i].date_start[0].split("-");
+				target_date_t2_str = event_list[i].date_start[1].split(":");
+				// window.console.log("start_str: ");
+				// window.console.log(target_date_t1_str);
+				var target_date_start = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
 
-			target_date_t1_str = event_list[i].date_end[0].split("-");
-			target_date_t2_str = event_list[i].date_end[1].split(":");
-			// window.console.log("end_str: ");
-			// window.console.log(target_date_t1_str);
-			var target_date_end = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
+				if (first_date.getTime() > target_date_start.getTime()){
+					target_date_start = first_date; 
+				}
+				// window.console.log("target_date_start: ");
+				// window.console.log(target_date_start);
 
-			if (last_date.getTime() < target_date_end.getTime()){
-				target_date_end = last_date; 
-			}
-			// window.console.log("target_date_end: ");
-			// window.console.log(target_date_end);
+				target_date_t1_str = event_list[i].date_end[0].split("-");
+				target_date_t2_str = event_list[i].date_end[1].split(":");
+				// window.console.log("end_str: ");
+				// window.console.log(target_date_t1_str);
+				var target_date_end = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
 
-			// draw events
-			var target_date = new Date(target_date_start);
-			for (var j = 0; j <= diffInDays(target_date_start, target_date_end); j++){
-				// window.console.log(String(i)+" + "+String(j)); 
-				// calculate n-th week w.r.t first_date
-				diffdays = diffInDays(first_date, target_date);
-				// window.console.log("days: ");
-				// window.console.log(diffdays);
+				if (last_date.getTime() < target_date_end.getTime()){
+					target_date_end = last_date; 
+				}
+				// window.console.log("target_date_end: ");
+				// window.console.log(target_date_end);
 
-				// calculate n-th day w.r.t the week
-				weeks = parseInt(diffdays / 7) + 1;
-				days = parseInt(diffdays % 7);
+				// draw events
+				var target_date = new Date(target_date_start);
+				for (var j = 0; j <= diffInDays(target_date_start, target_date_end); j++){
+					// window.console.log(String(i)+" + "+String(j)); 
+					// calculate n-th week w.r.t first_date
+					diffdays = diffInDays(first_date, target_date);
+					// window.console.log("days: ");
+					// window.console.log(diffdays);
 
-				// window.console.log("weeks: ");
-				// window.console.log(weeks);
-				// window.console.log("days: ");
-				// window.console.log(days); 
+					// calculate n-th day w.r.t the week
+					weeks = parseInt(diffdays / 7) + 1;
+					days = parseInt(diffdays % 7);
 
-				$tmp = $('tr[week="'+weeks+'"] > td[day="'+days+'"] > div.day > span'); 
-				var ind = $tmp.children().length; 
-				// window.console.log("num children:"); 
-				// window.console.log(ind); 
-				if (ind < 6){
-					// $tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 
-					$tmp.append('<div class="row row'+ind+'">'+ event_list[i].title_cal +'</div>'); 	
-				}				
+					// window.console.log("weeks: ");
+					// window.console.log(weeks);
+					// window.console.log("days: ");
+					// window.console.log(days); 
 
-				// increase one day
-				target_date.setTime(target_date.getTime() + 24 * 60 * 60 * 1000);
-			}
+					$tmp = $('tr[week="'+weeks+'"] > td[day="'+days+'"] > div.day > span'); 
+					var ind = $tmp.children().length; 
+					// window.console.log("num children:"); 
+					// window.console.log(ind); 
+					if (ind < 6){
+						// $tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 
+						$tmp.append('<div class="row row'+ind+'">'+ event_list[i].title_cal +'</div>'); 	
+					}				
+
+					// increase one day
+					target_date.setTime(target_date.getTime() + 24 * 60 * 60 * 1000);
+				}
+
+			} 
 
 		}
 	}
@@ -462,7 +467,7 @@ function eventListAtMonthViewAll(first_date_str, last_date_str) {
 
 			$(".mypicker").val(["동아리", "자치단체", "학교", "기타", "공연", "전시/상영", "대회", "강연/세미나/워크샵", "모집", "공모전", "판매", "기타"])
 			$(".mypicker").selectpicker();
-			drawEventListAtMonthView(first_date_str, last_date_str, event_list_global);
+			drawEventListAtMonthView(first_date_str, last_date_str, event_list_global, search_query);
 			// window.console.log(event_list_global); 
 		}
 	});
