@@ -38,6 +38,7 @@ class Event(db.Model):
     def serialize(self):
      """Return object data in easily serializeable format"""
      return {
+     'id': self.id,
      'title': self.title,
      'title_cal': self.title_cal,
      'content': self.content,

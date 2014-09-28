@@ -452,6 +452,13 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 
         drawEventListAtMonthView(first_date, last_date_str, event_list_global, search_query); 
     });
+
+    $('#search-bar').submit(function(){
+        // console.log($("#search-value").val()); 
+        search_query = $("#search-value").val(); 
+        drawEventListAtMonthView(first_date, last_date_str, event_list_global, search_query); 
+        return false;
+    }); 
 };
 
 
@@ -608,7 +615,7 @@ function drawEventListAtMonthView(first_date_str, last_date_str, event_list, sea
                     // window.console.log(ind); 
                     if (ind < 5){
                         // $tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 
-                        $tmp.append('<div class="row row'+ind+'"><div>'+ event_list[i].title_cal +'</div><div id="???"></div></div>');     
+                        $tmp.append('<div class="row row'+ind+'" event_id="'+ event_list[i].id +'">'+ event_list[i].title_cal +'</div>');     
                     }               
 
                     // increase one day
