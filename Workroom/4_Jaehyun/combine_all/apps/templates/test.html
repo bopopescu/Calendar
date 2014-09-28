@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>KAIST Calendar</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.min.css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-select.min.js"></script>
+
+    <!-- bootstrap-select -->
+    <!-- http://silviomoreto.github.io/bootstrap-select/ -->
+    <!-- http://cdnjs.com/libraries/bootstrap-select -->
+    <link rel="stylesheet" href="/static/bootstrap-select-1.6.2/css/bootstrap-select.css">
+    <link rel="stylesheet" href="/static/bootstrap-select-1.6.2/css/bootstrap-select.css.map">
+    <link rel="stylesheet" href="/static/bootstrap-select-1.6.2/css/bootstrap-select.min.css">
+
+    <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/bootstrap-select.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/bootstrap-select.js.map"></script>
+    <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/bootstrap-select.min.js"></script>=
+    <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/i18n/defaults-en_US.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/i18n/defaults-en_US.min.js"></script>
+    <!-- <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/i18n/defaults-eu.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-select-1.6.2/js/i18n/defaults-eu.min.js"></script> -->
+
+    <!-- main.js  -->
+    <script type="text/javascript" src="/static/js/main.js"></script>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="cal"></div>
+    </div>
+
+    <nav class="navbar navbar-fixed-top calendar-head" role="navigation" style="height:87px">
+            <div class="form-group">
+                <form action="event_list" method="get" class="navbar-form navbar-left" role="search" style="z-index: 10;">
+                    <input type="text" class="form-control" id="search-value" name="search_get">
+                    <button type="Submit" class="font btn btn-default btn-search">검색</button>
+                </form> 
+
+            <div class="brand"style="z-index: -1">
+                <h2><button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
+                    <strong><span class="font"></span></strong>
+                    <button type="button" class="btn btn-link" id='next-month'> &gt; </button></h2>
+            </div>
+            
+<!--                 <a href="#" class="font btn btn-default btn-upload navbar navbar-right">업로드신청</a>
+ -->
+                <a href="#" class="font btn btn-default btn-upload navbar-right">업로드신청</a>
+
+                <select class="mypicker calendar-multiselect navbar navbar-right" multiple title="전체보기">
+                    <optgroup label="주최">
+                        <option>동아리</option>
+                        <option>자치단체</option>
+                        <option>학교</option>
+                        <option>기타</option>
+                    </optgroup>
+                    <optgroup label="성격">
+                        <option>공연</option>
+                        <option>전시/상영</option>
+                        <option>대회</option>
+                        <option>강연/세미나/워크샵</option>
+                        <option>모집</option>
+                        <option>공모전</option>
+                        <option>판매</option>
+                        <option>기타</option>
+                    </optgroup>
+                </select>
+
+            </div>
+
+
+        </nav>
+
+<!--         <table class="table" style="table-layout:fixed;">
+            <tr class="calendar-head">
+                <td valign="middle" colspan="1" align="center"><h3>
+                    <div class="col-xs-6" >
+                        <div class="left-inner-addon">
+                            <i class="icon-search"></i>
+                            <input type="text"
+                            class="form-control" 
+                            placeholder="Username" />
+                        </div>
+                    </div>
+                </h3></td>
+                <td valign="middle" colspan="1" align="center">
+                    <ul class="nav nav-pills">
+                        <li class="a"><a href="#">Month</a></li>
+                        <li class="b"><a href="#">Week</a></li>
+                        <li><a href="#">Day</a></li>
+                    </ul>
+                </td>
+                <td valign="middle" colspan="3" align="center">
+                    <h2 style="text-align:center;">
+                        <button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
+                        <span></span>
+                        <button type="button" class="btn btn-link" id='next-month'> &gt; </button>
+                    </h2>
+                </td>
+                <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;"><a href="#" class="btn btn-md btn-default btn-upload">업로드신청</a>
+                    <div id="zone">
+                    </div>
+
+
+                </h1>
+            </td>
+            <td valign="middle" colspan="1" align="center"><h1 style="text-align:center;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        카테고리 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation" class="dropdown-header">주최</li>
+                        <li><a href="#">카테고리1</a></li>
+                        <li><a href="#">카테고리2</a></li>
+                        <li><a href="#">카테고리3</a></li>
+                        <li class="divider"></li>
+                        <li role="presentation" class="dropdown-header">성질(??)</li>
+                        <li><a href="#">카테고리1</a></li>
+                        <li><a href="#">카테고리2</a></li>
+                        <li><a href="#">카테고리3</a></li>
+                    </ul>
+                </div>
+            </h1>
+        </td>
+    </tr>
+</table> -->
+<div id="zone">
+</div>
+<table class="table calendar">
+
+    <tr class="days">
+        <td>Sun</td>
+        <td>Mon</td>
+        <td>Tue</td>
+        <td>Wed</td>
+        <td>Thu</td>
+        <td>Fri</td>
+        <td>Sat</td>
+    </tr>
+    <tr week="1">
+        <td day="0"><div class="day"><div class="row 1"></div></div></td>
+        <td day="1"><div class="day"></div></td>
+        <td day="2"><div class="day"></div></td>
+        <td day="3"><div class="day"></div></td>
+        <td day="4"><div class="day"></div></td>
+        <td day="5"><div class="day"></div></td>
+        <td day="6"><div class="day"></div></td>
+    </tr>
+    <tr week="2">
+        <td day="0"><div class="day"></div></td>
+        <td day="1"><div class="day"></div></td>
+        <td day="2"><div class="day"></div></td>
+        <td day="3"><div class="day"></div></td>
+        <td day="4"><div class="day"></div></td>
+        <td day="5"><div class="day"></div></td>
+        <td day="6"><div class="day"></div></td>
+    </tr>
+    <tr week="3">
+        <td day="0"><div class="day"></div></td>
+        <td day="1"><div class="day"></div></td>
+        <td day="2"><div class="day"></div></td>
+        <td day="3"><div class="day"></div></td>
+        <td day="4"><div class="day"></div></td>
+        <td day="5"><div class="day"></div></td>
+        <td day="6"><div class="day"></div></td>
+    </tr>
+    <tr week="4">
+        <td day="0"><div class="day"></div></td>
+        <td day="1"><div class="day"></div></td>
+        <td day="2"><div class="day"></div></td>
+        <td day="3"><div class="day"></div></td>
+        <td day="4"><div class="day"></div></td>
+        <td day="5"><div class="day"></div></td>
+        <td day="6"><div class="day"></div></td>
+    </tr>
+    <tr week="5">
+        <td day="0"><div class="day"></div></td>
+        <td day="1"><div class="day"></div></td>
+        <td day="2"><div class="day"></div></td>
+        <td day="3"><div class="day"></div></td>
+        <td day="4"><div class="day"></div></td>
+        <td day="5"><div class="day"></div></td>
+        <td day="6"><div class="day"></div></td>
+    </tr>
+    <tr week="6">
+        <td day="0"><div class="day"></div></td>
+        <td day="1"><div class="day"></div></td>
+        <td day="2"><div class="day"></div></td>
+        <td day="3"><div class="day"></div></td>
+        <td day="4"><div class="day"></div></td>
+        <td day="5"><div class="day"></div></td>
+        <td day="6"><div class="day"></div></td>
+    </tr>
+</table>
+
+
+
+<div class="EventList">
+    {% if context.event_list %}
+    {% for event in context.event_list %}
+    <div class="well" id="event_{{ event.id }}">
+        <h1><a href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h1>
+        <h3>{{ event.title_cal }}</h3>
+        <h6>{{ event.content }}</h6>
+        <h6>{{ event.host }}</h6>
+        <h6>{{ event.category_char }}</h6>
+        <h6>{{ event.category_host }}</h6>
+
+        <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+        <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+
+        <h6>{{ event.location }}</h6>
+        <h6>{{ event.link }}</h6>
+        <h6>{{ event.poster }}</h6>
+        <h6>{{ event.contact }}</h6>
+        <h6>{{ event.contact_open }}</h6>
+        <h6>{{ event.acceptace }}</h6>
+        <h6>{{ event.password }}</h6>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="no-list">
+        이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.calendar-head{
+    width: 1450px;
+}
+div.day{
+    height: 120px;
+    text-align: right;
+}
+table.calendar{
+    margin-left: 25px;
+    /*display : none;*/
+}
+.days{
+    text-align: center;
+    width:1450px;
+}
+.days td{
+    width:200px;
+}
+.other{
+    color:gray;
+}
+td[day="0"]{
+    color: red;
+}
+td[day="6"]{
+    color: blue;
+}
+.grayday{
+    background-color: #DDDDDD;
+}
+.day .row{
+    margin-right: 0;
+}
+.calendar{
+    margin-left:50px; 
+}
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;    
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+.brand{
+    position: absolute;;
+    width:100%;
+    left:0;
+    margin-left :auto;
+    margin-right: auto;
+    text-align: center;
+}
+body{
+    padding-top: 84px;
+}
+nav{
+    background-color: #FFFFFF;
+}
+nav .navbar-left{
+    margin-left: 60px;
+    margin-top: 25px;
+}
+nav .btn-upload{
+    margin-left: 30px;
+    margin-top: 25px;
+    margin-right: 80px;
+}
+nav .btn-group{
+    margin-top: 25px;
+}
+
+.modal.modal-wide .modal-dialog {
+  width: 50%;
+}
+
+</style>
+</body>
+</html>                                     
