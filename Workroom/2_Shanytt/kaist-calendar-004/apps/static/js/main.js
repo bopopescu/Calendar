@@ -31,6 +31,45 @@ global_month = 9;
 // return true;
 // };
 
+function getDailyList(el){
+    var insert_text = "";
+    var date = el.children('.date').attr("date");
+    console.log('hello!');
+    $.ajax({
+        url: "/getDailyList",
+        dataType: 'JSON',
+        data: {
+            "date" : date
+        },
+        success: function(data){
+        	 // data.context.event_list[i].date_start[0]
+            insert_text = '<tr date="' + date +'" class="list"><td colspan="7"><div date="'+ date +'" class="list">'
+                +'<div style= "border: 1px solid gold; background-color: black; padding: 10px">';
+            if(data.event_list.length == 0){  
+            	console.log('nothing');
+            return false;              
+            }
+            else{
+            	console.log('yes!');
+            	for(var i = 0; i < data.event_list.length; i++){
+            		var element = data.event_list[i]
+;            		insert_text += '<p class="text-left" style="color: white">' + element.title + '</p>';
+            	}
+            }
+            insert_text += '</div></div></td></tr>';
+            window.console.log(insert_text);
+            $(insert_text).insertAfter($(el.parent().parent()));
+            $('.list').hide();
+            $('.list').slideToggle("slow");
+        },
+        error: function(status){
+            insert_text = "<div id='list_1' class='col-md-8 col-md-offset-2 row list'><h1>This is an error</h1></div>";
+            $(insert_text).insertAfter('#here');
+            return false;
+        } 
+    });
+        console.log('out');
+}    
 
 function makeDetail(id_){
 	$.ajax({
@@ -442,5 +481,25 @@ $(document).ready(function(){
 		$target = $(this).parent();
 		$target.toggleClass("grayday");
 	});
+	$('.day').click(function(){
+        console.log('-------');
+
+        if($(this).parent().parent().next().children().children('.list').attr("date") == $(this).children('.date').attr("date")){
+        	console.log($(this).attr("date"));
+        	console.log($(this).parent().parent().next().attr("date"));
+            $(this).parent().parent().next().children().children('.list').slideToggle('slow'); 
+            // if($(this).parents('.row').next().css('display') == "none")
+            // $(this).parents('.row').next().remove();
+        }
+        else{
+            $(".list").remove();
+            getDailyList($(this));
+            // $('body').on('condition', '.list', function(e){
+            //     console.log('-----');
+            //     $('.list').slideToggle('slow');
+            // });
+        }
+        console.log('last');
+    });
 
 });

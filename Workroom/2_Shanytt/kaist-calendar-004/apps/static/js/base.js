@@ -1,12 +1,15 @@
 
 function getDailyList(el){
     var insert_text = "";
-    var id = el.attr("id");
+    var date = el.attr("date");
     $.ajax({
         url: "/getDailyList",
         dataType: 'JSON',
+        data: {
+            "date" : date
+        },
         success: function(data){
-            insert_text = '<div id="'+ id +'" class="row list">'
+            insert_text = '<div date="'+ date +'" class="row list">'
                 +'<div class="col-md-8 col-md-offset-2" style= "border: 1px solid gold; background-color: black; padding: 10px">';
             if(data.event_list.length == 0){  
             return false              
