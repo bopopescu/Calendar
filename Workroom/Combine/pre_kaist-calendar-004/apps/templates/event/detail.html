@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+    <div class="EventList">
+        {% if event %}
+                <div class="well" id="event_{{ event.id }}">
+                    <h1>{{ event.title }}</h1>
+                    <h3>{{ event.title_cal }}</h3>
+                    <h6>{{ event.content }}</h6>
+                    <h6>{{ event.host }}</h6>
+                    <h6>{{ event.category_char }}</h6>
+                    <h6>{{ event.category_host }}</h6>
+                    
+                    <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    
+                    <h6>{{ event.location }}</h6>
+                    <h6>{{ event.link }}</h6>
+                    <h6>{{ event.poster }}</h6>
+                    <h6>{{ event.contact }}</h6>
+                    <h6>{{ event.contact_open }}</h6>
+                    <h6>{{ event.acceptace }}</h6>
+                    <h6>{{ event.password }}</h6>
+                </div>
+        {% else %}
+            <div class="no-list">
+                이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
+            </div>
+        {% endif %}
+    </div>
+    <div class="bottomButtons">
+        <a href="{{ url_for('event_list') }}" class="btn btn-primary">목록보기</a>
+        <a href="{{ url_for('event_update', id=event.id) }}" class="btn btn-success">이벤트 수정</a>
+        <a href="{{ url_for('event_delete', id=event.id) }}" class="btn btn-danger">이벤트 삭제</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+</body>
+</html>

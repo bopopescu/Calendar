@@ -4,11 +4,12 @@
     <title>KAIST Calendar</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link type="text/css" rel="stylesheet" href="/static/css/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/build/css/bootstrap-datetimepicker.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap-select.min.js"></script>
 </head>
 
 
@@ -32,26 +33,30 @@
             <a href="#" class="btn btn-md btn-default btn-upload navbar navbar-right">업로드신청</a>
             
 
-            <select class="selectpicker navbar navbar-right" multiple title="전체보기">
-                <optgroup label="주최">
-                    <option>동아리</option>
-                    <option>자치단체</option>
-                    <option>학교</option>
-                    <option>기타</option>
-                </optgroup>
-                <optgroup label="성격">
-                    <option>공연</option>
-                    <option>전시/상영</option>
-                    <option>대회</option>
-                    <option>강연/세미나/워크샵</option>
-                    <option>모집</option>
-                    <option>공모전</option>
-                    <option>판매</option>
-                    <option>기타</option>
-                </optgroup>
-          </select>
-      </nav>
+            <div class="btn-group navbar navbar-right">
 
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    카테고리 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-header">주최</li>
+                    <li><a href="#">동아리</a></li>
+                    <li><a href="#">자치단체</a></li>
+                    <li><a href="#">학교</a></li>
+                    <li><a href="#">기타</a></li>
+                    <li class="divider"></li>
+                    <li role="presentation" class="dropdown-header">성격</li>
+                    <li><a href="#">공연</a></li>
+                    <li><a href="#">전시/상영</a></li>
+                    <li><a href="#">대회</a></li>
+                    <li><a href="#">강연/세미나/워크샵</a></li>
+                    <li><a href="#">모집</a></li>
+                    <li><a href="#">공모전</a></li>
+                    <li><a href="#">판매</a></li>
+                    <li><a href="#">기타</a></li>
+                </ul>
+            </div>
+        </nav>
 
 <!--         <table class="table" style="table-layout:fixed;">
             <tr class="calendar-head">
@@ -282,6 +287,11 @@ nav .btn-upload{
 nav .btn-group{
     margin-top: 25px;
 }
+
+.modal.modal-wide .modal-dialog {
+  width: 50%;
+}
+
 </style>
 </body>
 </html>                                     
