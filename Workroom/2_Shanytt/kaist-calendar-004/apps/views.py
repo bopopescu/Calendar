@@ -5,6 +5,7 @@ from apps import app, db
 from models import Event
 from sqlalchemy import desc
 from forms import EventForm
+from datetime import datetime
 
 import logging
 
@@ -170,3 +171,17 @@ def categorize():
     category = request.args.get('category', 'None', type=str)
     # selected_events = Event.query.filter(Event.category_host == category)
     return jsonify(category=category)
+
+@app.route('/getDailyList')
+def get_daily_list():
+    date_ = int(request.args.get('date')) # format: datetime 00:00
+    date_ = datetime.fromordinal(date_)
+
+    event_list = Event.query.filter( date_ >= Event.date_start, date_ <= Event.date_end).all() # format: datetime
+    #event_1 = {'title': "ㅇㅅㅂㅅ 개강파티"}
+    #event_2 = {'title': "ㅇㅅㅂㅅ 스터디 모임"}
+
+    #event_list = [event_1, event_2]
+
+    return jsonify(event_list=[i.serialize for i in event_list])
+
