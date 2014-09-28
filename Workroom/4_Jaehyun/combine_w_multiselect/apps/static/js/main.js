@@ -1,0 +1,537 @@
+var global_year = 2014,
+global_month = 9;
+
+// function makeDetail(number){
+// 	$.ajax({
+// 		url:"/get_inform",
+// 		dataType : 'JSON',
+// 		data: {
+// 			"number" : number
+// 			//원래는 이벤트의 id를 주고, 그에 맞는 정보들을 받아오는 것입니다.
+// 		},
+// 		success:function(data){
+// 			temp = data.inform;
+// 			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+// 			'<h4 class="modal-title">' + temp['title'] + '<small>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + temp['category_char'] + '/' + temp['category_host']+'</small></h4></div>'+
+// 			'<div class="modal-body">'+
+// 			'<p>주최 : '+temp['host']+'</p><p>행사시간 : '+temp['date_start'] + ' ~ '+temp['date_end'] + '</p><p>행사장소 : '+temp['location']+'</p><p>행사소개 : '+temp['content']+'</p>'+
+// 			'<p class="text-warning"><small>행사 관련 정보에 오류가 있을 경우 관리자에게 연락바랍니다.</small></p>'+
+// 			'</div>'+
+// 			'<div class="modal-footer">'+
+// 			'<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>'+
+// 			'</div></div></div></div>';
+// 			$("#zone").append(string);
+// 			$("#myModal").modal('show');
+// 		},
+// 		error: function(status){
+// 			string = "<div class='well' id='article_" + data.id + ".><h1>에러가 발생했습니다..</h1></div>";
+// 			$("#zone").append(string);
+// 		}
+// 	});
+// return true;
+// };
+
+
+function makeDetail(id_){
+	$.ajax({
+		url:"/get_inform",
+		dataType : 'JSON',
+		data: {
+			"id_" : id_
+			//원래는 이벤트의 id를 주고, 그에 맞는 정보들을 받아오는 것입니다.
+		},
+		success:function(data){
+			temp = data.context.event;
+			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+			'<h4 class="modal-title">' + temp['title'] + '<small>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + temp['category_char'] + '/' + temp['category_host']+'</small></h4></div>'+
+			'<div class="modal-body">'+
+			'<p>주최 : '+temp['host']+'</p><p>행사시간 : '+temp['date_start'] + ' ~ '+temp['date_end'] + '</p><p>행사장소 : '+temp['location']+'</p><p>행사소개 : '+temp['content']+'</p>'+
+			'<p class="text-warning"><small>행사 관련 정보에 오류가 있을 경우 관리자에게 연락바랍니다.</small></p>'+
+			'</div>'+
+			'<div class="modal-footer">'+
+			'<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>'+
+			'</div></div></div></div>';
+			$("#zone").append(string);
+			$("#myModal").modal('show');
+		},
+		error: function(status){
+			string = "<div class='well' id='article_" + id_ + ".><h1>에러가 발생했습니다..</h1></div>";
+			$("#zone").append(string);
+		}
+	});
+return true;
+};
+
+function upload_request(number){
+	$.ajax({
+		url:"/get_inform",
+		dataType : 'JSON',
+		data: {
+			"number" : number
+			//원래는 이벤트의 id를 주고, 그에 맞는 정보들을 받아오는 것입니다.
+		},
+		success:function(data){
+			temp = data.inform;
+			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+			'<h4 class="modal-title">업로드신청</h4></div>'+
+			'<div class="modal-body">'+
+			'<p>업로드 신청 폼을 만들 공간</p>'+
+			'<p class="text-warning"><small>뚝딱뚝딱</small></p>'+
+			'</div>'+
+			'<div class="modal-footer">'+
+			'<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>'+
+			'</div></div></div></div>';
+			$("#zone").append(string);
+			$("#myModal").modal('show');
+		},
+		error: function(status){
+			string = "<div class='well' id='article_" + data.id + ".><h1>에러가 발생했습니다..</h1></div>";
+			$("#zone").append(string);
+		}
+	});
+	return true;
+};
+
+
+
+function callMonth(month){
+	$.ajax({
+		url:"/get_month",
+		dataType:'JSON',
+		data:{
+			"month":month,
+		},
+		success:function(data){
+			string = '<div class="cal"> hello I am month view It is' +data.month +'</div>';
+			$('.cal').remove();
+			$('.container').append(string);
+		}
+	});
+};
+
+function callWeek(week){
+	$.ajax({
+		url:"/get_week",
+		dataType:'JSON',
+		data:{
+			"week":week,
+		},
+		success:function(data){
+			string = '<div class="cal"> hello I am week!!! view It is' + data.week + '</div>';
+			$('.cal').remove();
+			$('.container').append(string);
+		}
+	});
+};
+
+function getCategory(category){
+	$.ajax({
+		url:"/categorize",
+		dataType:'JSON',
+		data:{
+			"category" : category,
+		},
+		success:function(data){
+			string = '<div> Category is ' + data.category + '</div>';
+			$('.container').append(string);
+		}
+	});
+};
+
+function getLastDay(year,month){
+	if (month ==2){
+		if (year%4==0 && year%100!=0){
+			return 29;
+		}else{ return 28;}
+	}else if (jQuery.inArray(month,[1,3,5,7,8,10,12])== -1){
+		return 30;
+	}else  {
+		return 31;
+	};
+};
+
+var event_list_global = []; 
+
+function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았으면 좋겠다.
+	$('.day').children().remove();
+	$('.calendar').css('display','block');
+	var head_month = month>9? month : '0'+month;
+	$('.calendar-head h2 span').text(year + '.' + head_month);
+	var first_date = new Date(year + "/"+month),
+	first_date_ds = parseInt(first_date.getTime()/86400000) + 719163 ,
+	date_ds = first_date_ds,
+	first_day = first_date.getDay(),
+	last_day = getLastDay(year,month);
+
+	var temp_week = 1;
+	var temp_day = first_day;
+
+	var last_month,
+	last_year,
+	next_month,
+	next_year;
+
+	if (month==1){
+		last_month = 12;
+		last_year = year-1
+	} else{
+		last_month = month-1;
+		last_year = year;
+	};
+
+	if (month==12){
+		next_year = year +1
+		next_month = 1;
+	} else{
+		next_month = month+1;
+		next_year = year;
+	};
+
+	last_last = getLastDay(last_year,last_month);
+	for (var i = 1; i<=temp_day; i++) {
+		$temp = $('tr[week="1"]').children('td[day="'+(temp_day-i)+'"]');
+		$temp.children().append('<span class="date other" date="'+(first_date_ds-i)+'">'+(last_last-i+1)+
+			'</span>'
+			);
+	};
+
+	for (var i = 1; i <= last_day; i++) {
+		if (temp_day==7) {
+			temp_day = 0;
+			temp_week++;
+		};
+		$temp = $('tr[week="'+temp_week+'"]').children('td[day="'+temp_day+'"]');
+		$temp.children().append('<span class="date" date="'+(date_ds)+'">'+i+
+			'</span>'
+			);
+		temp_day++;
+		date_ds++;
+	};
+	for(var i = 1; i<= 14; i++){
+		if (temp_day==7) {
+			temp_day = 0;
+			temp_week++;
+		};
+		if (temp_week==7){break;}
+		$temp = $('tr[week="'+temp_week+'"]').children('td[day="'+temp_day+'"]');
+		$temp.children().append('<span class="date other" date="'+(date_ds)+'">'+i+
+			'</span>'
+			);
+		temp_day++;
+		date_ds++;
+	};
+
+
+	// specify first_date and last_date
+	var first_date = getFirstDateOfThisWeek(year,month,first_day);
+	var last_date = getLastDateOfThisWeek(year,month,last_day); 
+	window.console.log("fist_date: "); 
+	window.console.log(first_date);
+	window.console.log("last_date: ");
+	window.console.log(last_date);
+	var first_date_str = String(first_date.getFullYear()) + "-" + String(first_date.getMonth() + 1) + "-" + String(first_date.getDate()),
+		last_date_str = String(last_date.getFullYear()) + "-" + String(last_date.getMonth() + 1) + "-" + String(last_date.getDate()) ;
+    
+	window.console.log("fist_date_str: "); 
+	window.console.log(first_date_str);
+	window.console.log("last_date_str: ");
+	window.console.log(last_date_str);
+
+	// draw all event lists
+	eventListAtMonthViewAll(first_date_str, last_date_str); 
+	
+	// multiselect
+	$('.calendar-multiselect').change(function() {
+		drawEventListAtMonthView(first_date, last_date_str, event_list_global); 
+	});
+
+	// $('.selectpicker').selectpicker();
+	// $('.selectpicker').selectpicker('selectAll');
+
+	// 4 differernt example
+	// all
+	// eventListAtMonthViewAll(first_date_str, last_date_str);
+
+	// query 
+	// eventListAtMonthViewQuery(first_date_str, last_date_str, "빌게이츠");
+
+	// category_char
+	// eventListAtMonthViewCategoryChar(first_date_str, last_date_str, "sell");
+
+	// category_host
+	// eventListAtMonthViewCategoryHost(first_date_str, last_date_str, "sell");
+
+	// custom
+	// eventListAtMonthView(first_date_str, last_date_str, "2014", "sell");
+};
+
+var cateogryNameKorToEng = {};
+cateogryNameKorToEng['공연'] = 'concert';
+cateogryNameKorToEng['전시/상영'] = 'exhib';
+cateogryNameKorToEng['대회'] = 'comp';
+cateogryNameKorToEng['강연/세미나/워크샵'] = 'seminar';
+cateogryNameKorToEng['모집'] = 'recr';
+cateogryNameKorToEng['공모전'] = 'contest';
+cateogryNameKorToEng['판매'] = 'sell';
+cateogryNameKorToEng['기타'] = 'etc_cat';
+cateogryNameKorToEng['동아리'] = 'club';
+cateogryNameKorToEng['자치단체'] = 'student';
+cateogryNameKorToEng['학교'] = 'uni';
+cateogryNameKorToEng['기타'] = 'etc_host';
+
+var cateogryNameEngToOrignialIndex = {};
+cateogryNameEngToOrignialIndex['공연'] = 4;
+cateogryNameEngToOrignialIndex['전시/상영'] = 5;
+cateogryNameEngToOrignialIndex['대회'] = 6;
+cateogryNameEngToOrignialIndex['강연/세미나/워크샵'] = 7;
+cateogryNameEngToOrignialIndex['모집'] = 8;
+cateogryNameEngToOrignialIndex['공모전'] = 9;
+cateogryNameEngToOrignialIndex['판매'] = 10;
+cateogryNameEngToOrignialIndex['기타'] = 11;
+cateogryNameEngToOrignialIndex['동아리'] = 0;
+cateogryNameEngToOrignialIndex['자치단체'] = 1;
+cateogryNameEngToOrignialIndex['학교'] = 2;
+cateogryNameEngToOrignialIndex['기타'] = 3;
+
+function getCategoryNameInEngFromKor(name_kor) {
+	return cateogryNameKorToEng[name_kor];
+}	
+
+function getFirstDateOfThisWeek(year,month,date){ 
+    // get current date
+    target = new Date(year,month-1,date); // This date variable has to be initialized by function arguments. Today is the default setting. 
+    // window.console.log("today :");
+    // window.console.log(target);
+
+    var target_date = target.getDate(), // date 1-31
+	target_day = target.getDay(); // day of week. 0-6
+	
+    // get the first and the last date of the target week. 
+    var first = new Date(target);
+    // var last = new Date(target);
+    first.setDate(target.getDate() - target_day);
+    // window.console.log("first: ");
+    // window.console.log(first); 
+    // last.setDate(target.getDate() + ( 6 - target_day )); 
+    // window.console.log("last: ");
+    // window.console.log(last);
+    return first;
+}
+
+function getLastDateOfThisWeek(year,month,date){ 
+    // get current date
+    target = new Date(year,month-1,date); // This date variable has to be initialized by function arguments. Today is the default setting. 
+    // window.console.log("today :");
+    // window.console.log(target);
+
+    var target_date = target.getDate(), // date 1-31
+	target_day = target.getDay(); // day of week. 0-6
+	
+    // get the first and the last date of the target week. 
+    //var first = new Date(target);
+    var last = new Date(target);
+    // first.setDate(target.getDate() - target_day);
+    // window.console.log("first: ");
+    // window.console.log(first); 
+    last.setDate(target.getDate() + ( 6 - target_day )); 
+    // window.console.log("last: ");
+    // window.console.log(last);
+    return last;
+}
+
+function diffInDays(src_date, dst_date){
+	var diffDays = Math.abs(dst_date.getTime() - src_date.getTime()) / (1000 * 3600 * 24);
+	return diffDays;
+}
+
+
+function drawEventListAtMonthView(first_date_str, last_date_str, event_list) {
+	$("tr > td > div.day > span > div.row").remove(); 
+	window.console.log("asdfasdfasdfasdffasfd");
+	window.console.log(event_list); 
+
+	var first_date = new Date(first_date_str),
+		last_date = new Date(last_date_str),
+	target_date_t1_str = "",
+	target_date_t2_str = "";
+	// window.console.log("first_date_str: ");
+	// window.console.log(first_date_str);
+	var days = 0, weeks = 0, diffdays = 0; 
+
+	for (var i = 0; i < event_list.length; i++) {
+		// window.console.log(event_list[i].category_char);
+		// window.console.log(event_list[i]);
+		// window.console.log(cateogryNameEngToOrignialIndex[event_list[i].selected_category_char_list]);
+
+		if( $('.calendar-multiselect > div > ul > li[data-original-index="'+
+			cateogryNameEngToOrignialIndex["공연"]+'"].selected').length != 0 ) {
+			// window.console.log(i); 
+
+			target_date_t1_str = event_list[i].date_start[0].split("-");
+			target_date_t2_str = event_list[i].date_start[1].split(":");
+			// window.console.log("start_str: ");
+			// window.console.log(target_date_t1_str);
+			var target_date_start = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
+
+			if (first_date.getTime() > target_date_start.getTime()){
+				target_date_start = first_date; 
+			}
+			// window.console.log("target_date_start: ");
+			// window.console.log(target_date_start);
+
+			target_date_t1_str = event_list[i].date_end[0].split("-");
+			target_date_t2_str = event_list[i].date_end[1].split(":");
+			// window.console.log("end_str: ");
+			// window.console.log(target_date_t1_str);
+			var target_date_end = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
+
+			if (last_date.getTime() < target_date_end.getTime()){
+				target_date_end = last_date; 
+			}
+			// window.console.log("target_date_end: ");
+			// window.console.log(target_date_end);
+
+			// draw events
+			var target_date = new Date(target_date_start);
+			for (var j = 0; j <= diffInDays(target_date_start, target_date_end); j++){
+				// window.console.log(String(i)+" + "+String(j)); 
+				// calculate n-th week w.r.t first_date
+				diffdays = diffInDays(first_date, target_date);
+				// window.console.log("days: ");
+				// window.console.log(diffdays);
+
+				// calculate n-th day w.r.t the week
+				weeks = parseInt(diffdays / 7) + 1;
+				days = parseInt(diffdays % 7);
+
+				// window.console.log("weeks: ");
+				// window.console.log(weeks);
+				// window.console.log("days: ");
+				// window.console.log(days); 
+
+				$tmp = $('tr[week="'+weeks+'"] > td[day="'+days+'"] > div.day > span'); 
+				var ind = $tmp.children().length; 
+				// window.console.log("num children:"); 
+				// window.console.log(ind); 
+				if (ind < 6){
+					// $tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 
+					$tmp.append('<div class="row row'+ind+'">'+ event_list[i].title_cal +'</div>'); 	
+				}				
+
+				// increase one day
+				target_date.setTime(target_date.getTime() + 24 * 60 * 60 * 1000);
+			}
+
+		}
+	}
+}
+
+// function eventListAtMonthView(first_date_str, last_date_str, query, category_char, category_host){
+// 	// window.console.log("query: ");
+// 	// window.console.log(query);
+// 	$.ajax({
+// 		url:"/event_list",
+// 		dataType:'JSON',
+// 		type: "GET",
+// 		data:{
+// 			"first_date":first_date_str,
+// 			"last_date":last_date_str,
+// 			"query":query,
+// 			"category_char":category_char,
+// 			"category_host":category_host,
+// 		},
+// 		success:function(data){
+// 			// do what you want
+// 			drawEventListAtMonthView(first_date_str, last_date_str, data) ;
+// 		}
+// 	});
+// };
+
+function eventListAtMonthViewAll(first_date_str, last_date_str) {
+	$.ajax({
+		url:"/event_list",
+		dataType:'JSON',
+		type: "GET",
+		data:{
+			"first_date":first_date_str,
+			"last_date":last_date_str,
+		},
+		success:function(data){
+			// do what you want
+			event_list_global = data.context.event_list;
+
+			$(".mypicker").val(["동아리", "자치단체", "학교", "기타", "공연", "전시/상영", "대회", "강연/세미나/워크샵", "모집", "공모전", "판매", "기타"])
+			$(".mypicker").selectpicker();
+			drawEventListAtMonthView(first_date_str, last_date_str, event_list_global);
+			// window.console.log(event_list_global); 
+		}
+	});
+}
+
+function eventListAtMonthViewCategoryChar(first_date_str, last_date_str, category_char) {
+	eventListAtMonthView(first_date_str, last_date_str, null, category_char, null);
+}
+
+
+function eventListAtMonthViewCategoryHost(first_date_str, last_date_str, category_host) {
+	eventListAtMonthView(first_date_str, last_date_str, null, null, category_host);
+}
+
+function eventListAtMonthViewQuery(first_date_str, last_date_str, query) {
+	eventListAtMonthView(first_date_str, last_date_str, query, null, null);
+}
+
+$(document).ready(function(){
+
+	$('.calendar-multiselect > div > ul > li').addClass('selected');
+
+	makeMonthtemplate(2014,9);
+
+	$('.btn-upload').click(function(){
+		makeDetail(1);
+	});
+	// $('.btn-upload').click(function(){
+	// 	upload_request(1);
+	// });
+	$('body').on('hidden.bs.modal','#myModal',function(e){
+		console.log('-------');
+		$('#myModal').remove();
+	});
+	$('.buttons button').click(function(){
+		$(this).toggleClass("active");
+	});
+	$('.a').click(function(){
+		callMonth(1);
+		makeMonthtemplate(2014,9)
+	});
+	$('.b').click(function(){
+		callWeek(1);
+	});
+	$('button[category]').click(function(){
+		var temp_category = $(this).attr('category');
+		getCategory(temp_category);
+	});
+	$('#previous-month').click(function(){
+		if (global_month==1) {
+			global_year--;
+			global_month=12;
+		} else{
+			global_month--;
+		};
+		makeMonthtemplate(global_year,global_month);
+	});
+	$('#next-month').click(function(){
+		if (global_month==12) {
+			global_year++;
+			global_month=1;
+		} else{
+			global_month++;
+		};
+		makeMonthtemplate(global_year,global_month);
+	});
+	$('.day').hover(function(e){
+		$target = $(this).parent();
+		$target.toggleClass("grayday");
+	});
+
+});
