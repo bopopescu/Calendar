@@ -43,7 +43,7 @@ function getDailyList(el){
         },
         success: function(data){
         	 // data.context.event_list[i].date_start[0]
-            insert_text = '<tr date="' + date +'" class="list"><td colspan="7"><div date="'+ date +'" class="list">'
+            insert_text = '<tr date="' + date +'" class="list" style="background-color:black;"><td colspan="7"><div date="'+ date +'" class="list">'
                 +'<div style= "border: 1px solid gold; background-color: black; padding: 10px">';
             if(data.event_list.length == 0){  
             	console.log('nothing');
@@ -195,7 +195,7 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 	var head_month = month>9? month : '0'+month;
 	$('.calendar-head h2 span').text(year + '.' + head_month);
 	var first_date = new Date(year + "/"+month),
-	first_date_ds = parseInt(first_date.getTime()/86400000) + 719163 ,
+	first_date_ds = parseInt(first_date.getTime()/86400000) + 719164 ,
 	date_ds = first_date_ds,
 	first_day = first_date.getDay(),
 	last_day = getLastDay(year,month);
@@ -487,7 +487,8 @@ $(document).ready(function(){
         if($(this).parent().parent().next().children().children('.list').attr("date") == $(this).children('.date').attr("date")){
         	console.log($(this).attr("date"));
         	console.log($(this).parent().parent().next().attr("date"));
-            $(this).parent().parent().next().children().children('.list').slideToggle('slow'); 
+            $(this).parent().parent().next().children().children('.list').slideToggle('fast');
+            $('.list').remove();
             // if($(this).parents('.row').next().css('display') == "none")
             // $(this).parents('.row').next().remove();
         }
