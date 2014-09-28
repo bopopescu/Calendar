@@ -12,6 +12,16 @@
     <script type="text/javascript" src="https://rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>
+
+    <style>
+        @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+        .font {font-family: 'Nanum Gothic Coding';}
+        .h6 {font-family: 'Nanum Gothic Coding';}
+        body {
+            font-family: 'Nanum Gothic Coding';
+            color: #707070;
+        }
+    </style>
 </head>
 
 
@@ -21,45 +31,44 @@
     </div>
 
     <nav class="navbar navbar-fixed-top calendar-head" role="navigation" style="height:87px">
-            <div class="form-group">
-                <form action="event_list" method="get" class="navbar-form navbar-left" role="search" style="z-index: 10;">
-                    <input type="text" class="form-control" id="search-value" name="search_get">
-                    <button type="Submit" class="font btn btn-default btn-search">검색</button>
-                </form> 
+        <div class="form-group">
+            <form action="event_list" method="get" class="navbar-form navbar-left" role="search" style="z-index: 10;">
+                <input type="text" class="form-control" id="search-value" name="search_get">
+                <button type="Submit" class="font btn btn-default btn-search">검색</button>
+            </form> 
 
             <div class="brand"style="z-index: -1">
-                <h2><button type="button" class="btn btn-link" id='previous-month'> &lt; </button>
+                <h2 class="diary_date"><button type="button" class="btn btn-link glyphicon glyphicon-chevron-left" id='previous-month'></button>
                     <strong><span class="font"></span></strong>
-                    <button type="button" class="btn btn-link" id='next-month'> &gt; </button></h2>
-            </div>
-            
+                    <button type="button" class="btn btn-link glyphicon glyphicon-chevron-right" id='next-month'></button></h2></div>
+
 <!--                 <a href="#" class="font btn btn-default btn-upload navbar navbar-right">업로드신청</a>
- -->
-                <a href="#" class="font btn btn-default btn-upload navbar-right">업로드신청</a>
+-->
+<a href="#" class="font btn btn-default btn-upload navbar-right">업로드신청</a>
 
-                <select class="selectpicker navbar navbar-right" multiple title="전체보기">
-                    <optgroup label="주최">
-                        <option>동아리</option>
-                        <option>자치단체</option>
-                        <option>학교</option>
-                        <option>기타</option>
-                    </optgroup>
-                    <optgroup label="성격">
-                        <option>공연</option>
-                        <option>전시/상영</option>
-                        <option>대회</option>
-                        <option>강연/세미나/워크샵</option>
-                        <option>모집</option>
-                        <option>공모전</option>
-                        <option>판매</option>
-                        <option>기타</option>
-                    </optgroup>
-                </select>
+<select class="selectpicker navbar navbar-right" multiple title="전체보기">
+    <optgroup label="주최">
+        <option>동아리</option>
+        <option>자치단체</option>
+        <option>학교</option>
+        <option>기타</option>
+    </optgroup>
+    <optgroup label="성격">
+        <option>공연</option>
+        <option>전시/상영</option>
+        <option>대회</option>
+        <option>강연/세미나/워크샵</option>
+        <option>모집</option>
+        <option>공모전</option>
+        <option>판매</option>
+        <option>기타</option>
+    </optgroup>
+</select>
 
-            </div>
+</div>
 
 
-        </nav>
+</nav>
 
 <!--         <table class="table" style="table-layout:fixed;">
             <tr class="calendar-head">
@@ -120,101 +129,101 @@
 <table class="table calendar">
 
     <tr class="days">
-        <td>Sun</td>
-        <td>Mon</td>
-        <td>Tue</td>
-        <td>Wed</td>
-        <td>Thu</td>
-        <td>Fri</td>
-        <td>Sat</td>
+        <td class="font red">Sun</td>
+        <td class="font">Mon</td>
+        <td class="font">Tue</td>
+        <td class="font">Wed</td>
+        <td class="font">Thu</td>
+        <td class="font">Fri</td>
+        <td class="font blue">Sat</td>
     </tr>
     <tr week="1">
-        <td day="0"><div class="day"><div class="row 1"></div></div></td>
+        <td day="0"><div class="day daystart"><div class="row 1"></div></div></td>
         <td day="1"><div class="day"></div></td>
         <td day="2"><div class="day"></div></td>
         <td day="3"><div class="day"></div></td>
         <td day="4"><div class="day"></div></td>
         <td day="5"><div class="day"></div></td>
-        <td day="6"><div class="day"></div></td>
+        <td day="6"><div class="day dayend"></div></td>
     </tr>
     <tr week="2">
-        <td day="0"><div class="day"></div></td>
+        <td day="0"><div class="day daystart"></div></td>
         <td day="1"><div class="day"></div></td>
         <td day="2"><div class="day"></div></td>
         <td day="3"><div class="day"></div></td>
         <td day="4"><div class="day"></div></td>
         <td day="5"><div class="day"></div></td>
-        <td day="6"><div class="day"></div></td>
+        <td day="6"><div class="day dayend"></div></td>
     </tr>
     <tr week="3">
-        <td day="0"><div class="day"></div></td>
+        <td day="0"><div class="day daystart"></div></td>
         <td day="1"><div class="day"></div></td>
         <td day="2"><div class="day"></div></td>
         <td day="3"><div class="day"></div></td>
         <td day="4"><div class="day"></div></td>
         <td day="5"><div class="day"></div></td>
-        <td day="6"><div class="day"></div></td>
+        <td day="6"><div class="day dayend"></div></td>
     </tr>
     <tr week="4">
-        <td day="0"><div class="day"></div></td>
+        <td day="0"><div class="day daystart"></div></td>
         <td day="1"><div class="day"></div></td>
         <td day="2"><div class="day"></div></td>
         <td day="3"><div class="day"></div></td>
         <td day="4"><div class="day"></div></td>
         <td day="5"><div class="day"></div></td>
-        <td day="6"><div class="day"></div></td>
+        <td day="6"><div class="day dayend"></div></td>
     </tr>
     <tr week="5">
-        <td day="0"><div class="day"></div></td>
+        <td day="0"><div class="day daystart"></div></td>
         <td day="1"><div class="day"></div></td>
         <td day="2"><div class="day"></div></td>
         <td day="3"><div class="day"></div></td>
         <td day="4"><div class="day"></div></td>
         <td day="5"><div class="day"></div></td>
-        <td day="6"><div class="day"></div></td>
+        <td day="6"><div class="day dayend"></div></td>
     </tr>
     <tr week="6">
-        <td day="0"><div class="day"></div></td>
+        <td day="0"><div class="day daystart"></div></td>
         <td day="1"><div class="day"></div></td>
         <td day="2"><div class="day"></div></td>
         <td day="3"><div class="day"></div></td>
         <td day="4"><div class="day"></div></td>
         <td day="5"><div class="day"></div></td>
-        <td day="6"><div class="day"></div></td>
+        <td day="6"><div class="day dayend"></div></td>
     </tr>
 </table>
 
 
 
 <div class="EventList">
-    {% if context.event_list %}
-    {% for event in context.event_list %}
-    <div class="well" id="event_{{ event.id }}">
-        <h1><a href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h1>
-        <h3>{{ event.title_cal }}</h3>
-        <h6>{{ event.content }}</h6>
-        <h6>{{ event.host }}</h6>
-        <h6>{{ event.category_char }}</h6>
-        <h6>{{ event.category_host }}</h6>
-
-        <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
-        <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
-
-        <h6>{{ event.location }}</h6>
-        <h6>{{ event.link }}</h6>
-        <h6>{{ event.poster }}</h6>
-        <h6>{{ event.contact }}</h6>
-        <h6>{{ event.contact_open }}</h6>
-        <h6>{{ event.acceptace }}</h6>
-        <h6>{{ event.password }}</h6>
+        {% if context.event_list %}
+            {% for event in context.event_list %}
+                <div class="well" id="event_{{ event.id }}">
+                    <h1><a class="font" href="{{ url_for('event_detail', id=event.id) }}">{{ event.title }}</a></h1>
+                    <h3 class="font">{{ event.title_cal }}</h3>
+                    <h6>{{ event.content }}</h6>
+                    <h6>{{ event.host }}</h6>
+                    <h6>{{ event.category_char }}</h6>
+                    <h6>{{ event.category_host }}</h6>
+                    
+                    <h6>Starts at {{ event.date_start.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    <h6>Ends at {{ event.date_end.strftime('%Y-%m-%d %H:%M:%S') }}</h6>
+                    
+                    <h6>{{ event.location }}</h6>
+                    <h6>{{ event.link }}</h6>
+                    <h6>{{ event.poster }}</h6>
+                    <h6>{{ event.contact }}</h6>
+                    <h6>{{ event.contact_open }}</h6>
+                    <h6>{{ event.acceptace }}</h6>
+                    <h6>{{ event.password }}</h6>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="font red no-list">
+                이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
+            </div>
+        {% endif %}
     </div>
-    {% endfor %}
-    {% else %}
-    <div class="no-list">
-        이벤트가 존재하지 않습니다. 새로운 이벤트를 등록해주세요.
-    </div>
-    {% endif %}
-</div>
 
 <style>
 .calendar-head{
@@ -225,7 +234,7 @@ div.day{
     text-align: right;
 }
 table.calendar{
-    margin-left: 25px;
+    margin-left: 0px;
     /*display : none;*/
 }
 .days{
@@ -236,13 +245,28 @@ table.calendar{
     width:200px;
 }
 .other{
-    color:gray;
+    color:#DADADA;
 }
 td[day="0"]{
-    color: red;
+    color: #E26746;
+}
+.red {
+    color: #F88C70;
+}
+.day{
+    border-top: 2px solid #CAC9C9;
 }
 td[day="6"]{
-    color: blue;
+    color: #1B81D6;
+}
+.dayend{
+    border-top: 2px solid #70BBF8;
+}
+.daystart {
+    border-top: 2px solid #FF9E84;
+}
+.blue {
+    color: #41A7FA;
 }
 .grayday{
     background-color: #DDDDDD;
@@ -290,10 +314,39 @@ nav .btn-upload{
 nav .btn-group{
     margin-top: 25px;
 }
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+    border-top: 0px;
+}
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 3px;
+}
+.btn-link {
+    color: #AF3CDF;
+}
+/* nav .navbar-left {
+    margin-left: 0px;
+    margin-top: 15px;
+}
+.diary_date {
+    margin-top: 0px;
+}
+nav .btn-group {
+    margin-top: 0px;
+} */
+.navbar {
+    border-radius: 0px;
+}
+/* nav .btn-upload {
+    margin-top: 0px;
+} */
+.btn {
+    border-radius: 0px;
+}
 
 .modal.modal-wide .modal-dialog {
   width: 50%;
 }
+
 
 </style>
 </body>

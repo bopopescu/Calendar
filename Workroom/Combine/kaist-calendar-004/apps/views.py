@@ -5,6 +5,7 @@ from apps import app, db
 from models import Event
 from sqlalchemy import desc
 from forms import EventForm
+from datetime import datetime, timedelta
 
 import logging
 
@@ -20,13 +21,17 @@ def index():
 
 @app.route('/event_list', methods=['GET'])
 def event_list():
-    # get query
-    query = request.args.get('query', 'None', type=str)
-    print "query: " + query
 
-    # get query
-    category = request.args.get('category', 'None', type=str)
-    print "category: " + category
+    # # get query
+    # query = request.args.get('query', 'None', type=str)
+    # print "query: " + query
+
+    # # get query
+    # categories = request.args.getlist('category[]')
+    # print "categories: "
+    # print categories
+    # print "categories length:"
+    # print len(categories)
 
     # get first date
     first_date = request.args.get('first_date', 'None', type=str)
@@ -36,27 +41,38 @@ def event_list():
     last_date = request.args.get('last_date', 'None', type=str)
     print "last_date: " + last_date
 
-    # load events and filter events
-    if category:  # category has value
-        if query:  # query has value
-            event_list = Event.query.filter_by(category_char=category).filter(Event.title.like("%" + query + "%")).order_by(Event.date_start).filter(
-                Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
-            print "1"
-        else:  # query has no value
-            event_list = Event.query.filter_by(category_char=category).order_by(Event.date_start).filter(
-                Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
-            print "2"
-    else:  # category has no value
-        if query:  # query has value
-            event_list = Event.query.filter(Event.title.like("%" + query + "%")).order_by(Event.date_start).filter(
-                Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
-            print "3"
-        else:  # query has no value
-            # http://stackoverflow.com/questions/8895208/sqlalchemy-how-to-filter-date-field
-            event_list = Event.query.order_by(Event.date_start).filter(
-                Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
-            print "4"
+    # # load events and filter events
+    # if len(categories):  # category has value
+    #     event_list_tmp = []
+    #     for category in categories:
+    #         event_list_tmp.append(
+    #             Event.query.filter(Event.category_char == category))
 
+    #     event_list = event_list_tmp[0]
+    #     for i in range(1, len(event_list_tmp)):
+    #         event_list = event_list.union(event_list_tmp[i])
+
+    #     if query:  # query has value
+    #         event_list = event_list.filter(Event.title.like("%" + query + "%")).order_by(Event.date_start).filter(
+    #             Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    #         print "1"
+    #     else:  # query has no value
+    #         event_list = event_list.order_by(Event.date_start).filter(
+    #             Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    #         print "2"
+    # else:  # category has no value
+    #     if query:  # query has value
+    #         event_list = Event.query.filter(Event.title.like("%" + query + "%")).order_by(Event.date_start).filter(
+    #             Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    #         print "3"
+    #     else:  # query has no value
+    #         # http://stackoverflow.com/questions/8895208/sqlalchemy-how-to-filter-date-field
+    #         event_list = Event.query.order_by(Event.date_start).filter(
+    #             Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    #         print "4"
+
+    event_list = Event.query.order_by(Event.date_start).filter(Event.date_end >= first_date).filter(Event.date_start <= last_date).all()
+    
     print "event_list: "
     print event_list
 
@@ -83,7 +99,7 @@ def create():
 
     if request.method == 'POST':
         logging.info("Method: POST")
-        if True or form.validate_on_submit():
+        if form.validate_on_submit():
             event = Event(
                 title = form.title.data,
                 title_cal = form.title_cal.data,
@@ -214,3 +230,15 @@ def categorize():
     category = request.args.get('category', 'None', type=str)
     # selected_events = Event.query.filter(Event.category_host == category)
     return jsonify(category=category)
+
+@app.route('/getDailyList')
+def get_daily_list():
+    date_ = int(request.args.get('date')) # format: datetime 00:00
+    date_ = datetime.fromordinal(date_)
+    event_list = Event.query.filter( (date_+timedelta(days=1,seconds=-1)) >= Event.date_start, date_<= Event.date_end).all() # format: datetime
+    #event_1 = {'title': "ㅇㅅㅂㅅ 개강파티"}
+    #event_2 = {'title': "ㅇㅅㅂㅅ 스터디 모임"}
+
+    #event_list = [event_1, event_2]
+
+    return jsonify(event_list=[i.serialize for i in event_list])

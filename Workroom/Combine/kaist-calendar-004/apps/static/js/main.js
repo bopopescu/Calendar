@@ -31,6 +31,45 @@ global_month = 9;
 // return true;
 // };
 
+function getDailyList(el){
+    var insert_text = "";
+    var date = el.children('.date').attr("date");
+    console.log('hello!');
+    $.ajax({
+        url: "/getDailyList",
+        dataType: 'JSON',
+        data: {
+            "date" : date
+        },
+        success: function(data){
+        	 // data.context.event_list[i].date_start[0]
+            insert_text = '<tr date="' + date +'" class="list" style="background-color:black;"><td colspan="7"><div date="'+ date +'" class="list">'
+                +'<div style= "border: 1px solid gold; background-color: black; padding: 10px">';
+            if(data.event_list.length == 0){  
+            	console.log('nothing');
+            return false;              
+            }
+            else{
+            	console.log('yes!');
+            	for(var i = 0; i < data.event_list.length; i++){
+            		var element = data.event_list[i]
+;            		insert_text += '<p class="text-left" style="color: white">' + element.title + '</p>';
+            	}
+            }
+            insert_text += '</div></div></td></tr>';
+            window.console.log(insert_text);
+            $(insert_text).insertAfter($(el.parent().parent()));
+            $('.list').hide();
+            $('.list').slideToggle("slow");
+        },
+        error: function(status){
+            insert_text = "<div id='list_1' class='col-md-8 col-md-offset-2 row list'><h1>This is an error</h1></div>";
+            $(insert_text).insertAfter('#here');
+            return false;
+        } 
+    });
+        console.log('out');
+}    
 
 function makeDetail(id_){
 	$.ajax({
@@ -85,11 +124,17 @@ function makeDetail(id_){
 				j = 7;
 			}
 
-			string = '<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+			string ='<div id="myModal" class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
 			'<h4 class="modal-title">' + temp['title'] + '<small>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp' + category[i]+ '/' + category[j] +'</small></h4></div>'+
 			'<div class="modal-body">'+
+			'<div class="row">'+
+			'<div class="col-lg-4 text-center">'+
+            '</div>'+ // Poster loading space
+			'<div class="col-lg-8">'+
 			'<p>주최 : '+temp['host']+'</p><p>행사시간 : '+temp['date_start'] + ' ~ '+temp['date_end'] + '</p><p>행사장소 : '+temp['location']+'</p><p>행사소개 : '+temp['content']+'</p>'+
 			'<p class="text-warning"><small>행사 관련 정보에 오류가 있을 경우 관리자에게 연락바랍니다.</small></p>'+
+			'</div>'+
+			'</div>'+
 			'</div>'+
 			'<div class="modal-footer">'+
 			'<button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>'+
@@ -178,21 +223,21 @@ function upload_request(id_){
                                 '<div class="form-group">'+ // date_start
                                     '<label for="input_Date_start" class="col-lg-2 control-label">시작 일시</label>'+
                                     '<div class="col-lg-10">'+
-	                                    '<div class="input-group date" id="datetimepicker1">'+
-	                                        '<input type="text" class="form-control" data-date-format="YYYY-MM-DD hh:mm:00" id="date_start" name="date_start" placeholder="오른쪽 달력 아이콘을 클릭하세요."/>'+
-	                                        '<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>'+
-	                                        '</span>'+
-	                                    '</div>'+
+	                                    // '<div class="input-group date">'+
+	                                        '<input type="text" class="form-control" id="datetimepicker1" value="2014-09-28 00:00:00" data-date-format="YYYY-MM-DD hh:mm:00" id="date_start" name="date_start"/>'+
+	                                        // '<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>'+
+	                                        // '</span>'+
+	                                    // '</div>'+
 	                                '</div>'+
                                 '</div>'+
                                 '<div class="form-group">'+ // date_end
                                     '<label for="input_Date_end" class="col-lg-2 control-label">종료 일시</label>'+
                                     '<div class="col-lg-10">'+
-                                        '<div class="input-group date" id="datetimepicker2">'+
-                                            '<input type="text" class="form-control" data-date-format="YYYY-MM-DD hh:mm:00" id="date_end" name="date_end" placeholder="오른쪽 달력 아이콘을 클릭하세요."/>'+
-                                            '<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>'+
-                                            '</span>'+
-                                        '</div>'+
+                                        // '<div class="input-group date">'+
+                                            '<input type="text" class="form-control" id="datetimepicker2" value="2014-09-28 00:00:00" data-date-format="YYYY-MM-DD hh:mm:00" id="date_end" name="date_end"/>'+
+                                            // '<span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>'+
+                                            // '</span>'+
+                                        // '</div>'+
                                     '</div>'+
                                 '</div>'+
                                 '<div class="form-group">'+ // location
@@ -312,6 +357,9 @@ function getLastDay(year,month){
 	};
 };
 
+var event_list_global = []; 
+var search_query = ""; 
+
 function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았으면 좋겠다.
 	$('.day').children().remove();
 	$('.calendar').css('display','block');
@@ -381,34 +429,63 @@ function makeMonthtemplate(year,month){ //week 만드는 방식 flow가 같았�
 		date_ds++;
 	};
 
-	var first_date = getFirstDateOfThisWeek(year,month,first_day);
-	var last_date = getLastDateOfThisWeek(year,month,last_day); 
-	window.console.log("fist_date: "); 
-	window.console.log(first_date);
-	window.console.log("last_date: ");
-	window.console.log(last_date);
-	var first_date_str = String(first_date.getFullYear()) + "-" + String(first_date.getMonth() + 1) + "-" + String(first_date.getDate()),
-		last_date_str = String(last_date.getFullYear()) + "-" + String(last_date.getMonth() + 1) + "-" + String(last_date.getDate()) ;
-
+    // specify first_date and last_date
+    var first_date = getFirstDateOfThisWeek(year,month,first_day);
+    var last_date = getLastDateOfThisWeek(year,month,last_day); 
+    window.console.log("fist_date: "); 
+    window.console.log(first_date);
+    window.console.log("last_date: ");
+    window.console.log(last_date);
+    var first_date_str = String(first_date.getFullYear()) + "-" + String(first_date.getMonth() + 1) + "-" + String(first_date.getDate()),
+        last_date_str = String(last_date.getFullYear()) + "-" + String(last_date.getMonth() + 1) + "-" + String(last_date.getDate()) ;
     
-	window.console.log("fist_date_str: "); 
-	window.console.log(first_date_str);
-	window.console.log("last_date_str: ");
-	window.console.log(last_date_str);
+    window.console.log("fist_date_str: "); 
+    window.console.log(first_date_str);
+    window.console.log("last_date_str: ");
+    window.console.log(last_date_str);
 
-	// 4 differernt example
-	// all
-	// eventListAtMonthViewAll(first_date_str, last_date_str);
+    // draw all event lists
+    eventListAtMonthViewAll(first_date_str, last_date_str); 
+    
+    // multiselect
+    $('.calendar-multiselect').change(function() {
 
-	// query 
-	// eventListAtMonthViewQuery(first_date_str, last_date_str, "빌게이츠");
-
-	// category
-	// eventListAtMonthViewCategory(first_date_str, last_date_str, "sell");
-
-	// custom
-	eventListAtMonthView(first_date_str, last_date_str, "2014", "sell");
+        drawEventListAtMonthView(first_date, last_date_str, event_list_global, search_query); 
+    });
 };
+
+
+var cateogryNameKorToEng = {};
+cateogryNameKorToEng['공연'] = 'concert';
+cateogryNameKorToEng['전시/상영'] = 'exhib';
+cateogryNameKorToEng['대회'] = 'comp';
+cateogryNameKorToEng['강연/세미나/워크샵'] = 'seminar';
+cateogryNameKorToEng['모집'] = 'recr';
+cateogryNameKorToEng['공모전'] = 'contest';
+cateogryNameKorToEng['판매'] = 'sell';
+cateogryNameKorToEng['기타'] = 'etc_cat';
+cateogryNameKorToEng['동아리'] = 'club';
+cateogryNameKorToEng['자치단체'] = 'student';
+cateogryNameKorToEng['학교'] = 'uni';
+cateogryNameKorToEng['기타'] = 'etc_host';
+
+var cateogryNameEngToOrignialIndex = {};
+cateogryNameEngToOrignialIndex['공연'] = 4;
+cateogryNameEngToOrignialIndex['전시/상영'] = 5;
+cateogryNameEngToOrignialIndex['대회'] = 6;
+cateogryNameEngToOrignialIndex['강연/세미나/워크샵'] = 7;
+cateogryNameEngToOrignialIndex['모집'] = 8;
+cateogryNameEngToOrignialIndex['공모전'] = 9;
+cateogryNameEngToOrignialIndex['판매'] = 10;
+cateogryNameEngToOrignialIndex['기타'] = 11;
+cateogryNameEngToOrignialIndex['동아리'] = 0;
+cateogryNameEngToOrignialIndex['자치단체'] = 1;
+cateogryNameEngToOrignialIndex['학교'] = 2;
+cateogryNameEngToOrignialIndex['기타'] = 3;
+
+function getCategoryNameInEngFromKor(name_kor) {
+    return cateogryNameKorToEng[name_kor];
+}   
 
 function getFirstDateOfThisWeek(year,month,date){ 
     // get current date
@@ -457,113 +534,138 @@ function diffInDays(src_date, dst_date){
 	return diffDays;
 }
 
-function drawEventListAtMonthView(first_date_str, last_date_str, data) {
-	$("tr > td > div.day > div.row").remove(); 
+function drawEventListAtMonthView(first_date_str, last_date_str, event_list, search_query) {
+    $("tr > td > div.day > span > div.row").remove(); 
+    window.console.log("asdfasdfasdfasdffasfd");
+    window.console.log(event_list); 
 
-	window.console.log(data.context.event_list); 
-	var first_date = new Date(first_date_str),
-	target_date_t1_str = "",
-	target_date_t2_str = "";
-	// window.console.log("first_date_str: ");
-	// window.console.log(first_date_str);
-	var days = 0, weeks = 0, diffdays = 0; 
+    var first_date = new Date(first_date_str),
+        last_date = new Date(last_date_str),
+    target_date_t1_str = "",
+    target_date_t2_str = "";
+    // window.console.log("first_date_str: ");
+    // window.console.log(first_date_str);
+    var days = 0, weeks = 0, diffdays = 0; 
+    var is_all = 0; 
+    for (var i = 0; i < event_list.length; i++) {
+        // window.console.log(event_list[i].category_char);
+        // window.console.log(event_list[i]);
+        // window.console.log(cateogryNameEngToOrignialIndex[event_list[i].selected_category_char_list]);
 
-	for (var i = 0; i < data.context.event_list.length; i++) {
-		window.console.log(data.context.event_list[i]);
+        if( $('.calendar-multiselect > div > ul > li[data-original-index="'+
+            cateogryNameEngToOrignialIndex["공연"]+'"].selected').length != 0 ) {
 
-		target_date_t1_str = data.context.event_list[i].date_start[0].split("-");
-		target_date_t2_str = data.context.event_list[i].date_start[1].split(":");
-		// window.console.log("start_str: ");
-		// window.console.log(target_date_t1_str);
-		var target_date_start = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
+            if (search_query === "" || event_list[i].title.indexOf(search_query) > -1) {
+                // window.console.log(i); 
 
-		// window.console.log("target_date_start: ");
-		// window.console.log(target_date_start);
+                target_date_t1_str = event_list[i].date_start[0].split("-");
+                target_date_t2_str = event_list[i].date_start[1].split(":");
+                // window.console.log("start_str: ");
+                // window.console.log(target_date_t1_str);
+                var target_date_start = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
 
-		target_date_t1_str = data.context.event_list[i].date_end[0].split("-");
-		target_date_t2_str = data.context.event_list[i].date_end[1].split(":");
-		// window.console.log("end_str: ");
-		// window.console.log(target_date_t1_str);
-		var target_date_end = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
+                if (first_date.getTime() > target_date_start.getTime()){
+                    target_date_start = first_date; 
+                }
+                // window.console.log("target_date_start: ");
+                // window.console.log(target_date_start);
 
-		// window.console.log("target_date_end: ");
-		// window.console.log(target_date_end);
+                target_date_t1_str = event_list[i].date_end[0].split("-");
+                target_date_t2_str = event_list[i].date_end[1].split(":");
+                // window.console.log("end_str: ");
+                // window.console.log(target_date_t1_str);
+                var target_date_end = new Date(parseInt(target_date_t1_str[0]), parseInt(target_date_t1_str[1])-1, parseInt(target_date_t1_str[2]), parseInt(target_date_t2_str[0]), parseInt(target_date_t2_str[1]), parseInt(target_date_t2_str[2]), 0);
 
-		// draw events
-		var target_date = new Date(target_date_start);
-		for (var j = 0; j <= diffInDays(target_date_start, target_date_end); j++){
-			// calculate n-th week w.r.t first_date
-			diffdays = diffInDays(first_date, target_date);
-			// window.console.log("days: ");
-			// window.console.log(diffdays);
+                if (last_date.getTime() < target_date_end.getTime()){
+                    target_date_end = last_date; 
+                }
+                // window.console.log("target_date_end: ");
+                // window.console.log(target_date_end);
 
-			// calculate n-th day w.r.t the week
-			weeks = parseInt(diffdays / 7) + 1;
-			days = parseInt(diffdays % 7);
+                // draw events
+                var target_date = new Date(target_date_start);
+                for (var j = 0; j <= diffInDays(target_date_start, target_date_end); j++){
+                    // window.console.log(String(i)+" + "+String(j)); 
+                    // calculate n-th week w.r.t first_date
+                    diffdays = diffInDays(first_date, target_date);
+                    // window.console.log("days: ");
+                    // window.console.log(diffdays);
 
-			// window.console.log("weeks: ");
-			// window.console.log(weeks);
-			// window.console.log("days: ");
-			// window.console.log(days); 
+                    // calculate n-th day w.r.t the week
+                    weeks = parseInt(diffdays / 7) + 1;
+                    days = parseInt(diffdays % 7);
 
-			$tmp = $('tr[week="'+weeks+'"] > td[day="'+days+'"] > div.day'); 
-			var ind = $tmp.length - 1; 
-			// window.console.log("num children:"); 
-			// window.console.log(ind); 
-			if (ind < 6){
-				// $tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 	
-				$tmp.append('<div class="row row'+ind+'">'+ data.context.event_list[i].title_cal +'</div>'); 	
-			}				
+                    // window.console.log("weeks: ");
+                    // window.console.log(weeks);
+                    // window.console.log("days: ");
+                    // window.console.log(days); 
 
-			// increase one day
-			target_date.setTime(target_date.getTime() + 24 * 60 * 60 * 1000);
-		}
-	}
+                    $tmp = $('tr[week="'+weeks+'"] > td[day="'+days+'"] > div.day > span'); 
+                    var ind = $tmp.children().length; 
+                    // window.console.log("num children:"); 
+                    // window.console.log(ind); 
+                    if (ind < 5){
+                        // $tmp.append('<div class="row row'+ind+'">'+ 'event' + i +'</div>'); 
+                        $tmp.append('<div class="row row'+ind+'">'+ event_list[i].title_cal +'</div>');     
+                    }               
+
+                    // increase one day
+                    target_date.setTime(target_date.getTime() + 24 * 60 * 60 * 1000);
+                }
+
+            } 
+
+        }
+    }
 }
-
-function eventListAtMonthView(first_date_str, last_date_str, query, category){
-	window.console.log("query: ");
-	window.console.log(query);
-	$.ajax({
-		url:"/event_list",
-		dataType:'JSON',
-		type: "GET",
-		data:{
-			"first_date":first_date_str,
-			"last_date":last_date_str,
-			"query":query,
-			"category":category,
-		},
-		success:function(data){
-			// do what you want
-			drawEventListAtMonthView(first_date_str, last_date_str, data) ;
-		}
-	});
-};
 
 function eventListAtMonthViewAll(first_date_str, last_date_str) {
-	eventListAtMonthView(first_date_str, last_date_str, null, null);
+    $.ajax({
+        url:"/event_list",
+        dataType:'JSON',
+        type: "GET",
+        data:{
+            "first_date":first_date_str,
+            "last_date":last_date_str,
+        },
+        success:function(data){
+            // do what you want
+            event_list_global = data.context.event_list;
+            window
+            $(".mypicker").val(["동아리", "자치단체", "학교", "기타", "공연", "전시/상영", "대회", "강연/세미나/워크샵", "모집", "공모전", "판매", "기타"])
+            $(".mypicker").selectpicker();
+            drawEventListAtMonthView(first_date_str, last_date_str, event_list_global, search_query);
+            // window.console.log(event_list_global); 
+        }
+    });
 }
 
-function eventListAtMonthViewCategory(first_date_str, last_date_str, category) {
-	eventListAtMonthView(first_date_str, last_date_str, null, category);
+function eventListAtMonthViewCategoryChar(first_date_str, last_date_str, category_char) {
+    eventListAtMonthView(first_date_str, last_date_str, null, category_char, null);
 }
 
+
+function eventListAtMonthViewCategoryHost(first_date_str, last_date_str, category_host) {
+    eventListAtMonthView(first_date_str, last_date_str, null, null, category_host);
+}
 
 function eventListAtMonthViewQuery(first_date_str, last_date_str, query) {
-	eventListAtMonthView(first_date_str, last_date_str, query, null);
+    eventListAtMonthView(first_date_str, last_date_str, query, null, null);
 }
 
 $(document).ready(function(){
+    $('.calendar-multiselect > div > ul > li').addClass('selected');
 
 	makeMonthtemplate(2014,9);
 
 	// $('.btn-upload').click(function(){
-	// 	makeDetail(1);
+	// 	makeDetail(27);
 	// });
+
 	$('.btn-upload').click(function(){
 		upload_request(1);
 	});
+
 	$('body').on('hidden.bs.modal','#myModal',function(e){
 		console.log('-------');
 		$('#myModal').remove();
@@ -604,5 +706,27 @@ $(document).ready(function(){
 		$target = $(this).parent();
 		$target.toggleClass("grayday");
 	});
+	
+	$('.day').click(function(){
+        console.log('-------');
+
+        if($(this).parent().parent().next().children().children('.list').attr("date") == $(this).children('.date').attr("date")){
+        	console.log($(this).attr("date"));
+        	console.log($(this).parent().parent().next().attr("date"));
+            $(this).parent().parent().next().children().children('.list').slideToggle('fast');
+            $('.list').remove();
+            // if($(this).parents('.row').next().css('display') == "none")
+            // $(this).parents('.row').next().remove();
+        }
+        else{
+            $(".list").remove();
+            getDailyList($(this));
+            // $('body').on('condition', '.list', function(e){
+            //     console.log('-----');
+            //     $('.list').slideToggle('slow');
+            // });
+        }
+        console.log('last');
+    });
 
 });
